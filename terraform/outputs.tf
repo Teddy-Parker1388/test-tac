@@ -21,6 +21,14 @@ output "region" {
   value = var.region
 }
 
+output "vpc" {
+  value = var.vpc_id
+}
+
+output "instanceTags" {
+  value = "TODO.TAGS"
+}
+
 output "alb_target_groups" {
   description = "ALB Target Group ARN"
   value       = [module.app_lb_private.target_group_arns[1], module.app_lb_public.target_group_arns[0]]

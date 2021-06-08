@@ -8,6 +8,6 @@ users:
 monitoring:
   enable_snmp: no
   enable_netdata: no
-  enable_dynatrace: yes
+  enable_dynatrace: no
 
 devices: []
