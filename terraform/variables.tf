@@ -5,7 +5,7 @@ variable "region" {
 variable "app_name" {
   description = "Application Name"
   type        = string
-  default     = "tsunami-ref-app"
+  default     = "mostly-harmless"
 }
 
 variable "app_env" {
@@ -71,7 +71,7 @@ variable "enabled" {
 
 variable "add_to_logicmonitor" {
   type        = string
-  default     = "true"
+  default     = "false"
   description = "Controls an instance Tag named AddToLogicMonitor. When 'true' and the ASG-to-LM bridge is properly configured, new instance will be added to LogicMonitor on ASG scale-up events."
 }
 
@@ -141,20 +141,6 @@ variable "ingress_instance" {
     },
     {
       rule        = "all-icmp"
-      cidr_blocks = "10.0.0.0/8"
-    },
-    {
-      from_port   = 161
-      to_port     = 162
-      protocol    = "udp"
-      description = "LogicMonitor - SNMP"
-      cidr_blocks = "10.0.0.0/8"
-    },
-    {
-      from_port   = 19999
-      to_port     = 19999
-      protocol    = "tcp"
-      description = "NetData"
       cidr_blocks = "10.0.0.0/8"
     }
   ]

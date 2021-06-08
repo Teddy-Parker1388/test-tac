@@ -1,23 +1,12 @@
 ---
-# The name of the application.
-name: tsunami-ref-app
+name: mostly-harmless
+path: /opt/mostly-harmless
 
-# The installation path
-path: /opt/tsunami-ref-app
+user: fprefect
+group: fprefect
 
-# The user and group that should own and run the application
-user: web
-group: web
-
-# Log files that should be sent to Splunk.
-# Requires three settings per log file.
-# 1. log_path - The path to the actual log. Required.
-# 2. index - The Splunk index to send the log to. Required.
-# 3. source - Subgrouping for the log file. Optional.
-# 4. sourcetype - The type of log file. Required.
-#        - See https://docs.splunk.com/Documentation/Splunk/8.0.5/Data/Listofpretrainedsourcetypes
-splunk:
-  - log_path: "/opt/tsunami-ref-app/logs/request.log"
-    index: devops_prod_logs
-    sourcetype: generic_single_line
-    source: tsunami-ref-app-requests-dev
+splunk: []
+#   - log_path: None
+#     index: None
+#     sourcetype: None
+#     source: None

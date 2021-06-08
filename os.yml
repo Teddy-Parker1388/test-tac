@@ -1,55 +1,12 @@
 ---
-# Which OS should the application run on.
-# Current choices: centos7 | amazon_linux2
-#
-# This setting is overridden for AWS AMIs by the 'aws_base_ami_id' value in your
-# packer/vars.json file.
-# HOWEVER, this setting **must** match the base OS of the 'aws_base_ami_id' AMI.
-# os: amazon_linux2
-os: centos7
+os: amazon_linux2
 
 # Required ulimits for a given user
-ulimit:
-  user: web
-  limitnofile: 40000 #65536 or less
-  limitnproc: 32768
-  limitmemlock: 70000
+# ulimit:
+#   user: web
+#   limitnofile: 40000 #65536 or less
+#   limitnproc: 32768
+#   limitmemlock: 70000
 
-# tuneD
-## Profile Names for CentOS7
-## balanced
-## desktop
-## latency-performance
-## network-latency
-## network-throughput
-## powersave
-## throughput-performance
-## virtual-guest
-## virtual-host
-##
-## Choose to use either a built-in profile or a custom-built profile.
-## You **can NOT** use both. If both are defined, custom_profile wins!
 tuned:
-  # To use a built-in profile, set `profile`
   profile: balanced
-  ##
-#  To use a custom-built profile, define it in `custom_profile`
-#  custom_profile:
-#     name: tsunami-ref-app
-#     sections:
-#       - name: main
-#         params:
-#           - option: summary
-#             value: Test
-#           - option: include
-#             value: virtual-guest
-#       - name: sysctl
-#         params:
-#           - option: vm.dirty_ratio
-#             value: 30
-#           - option: vm.swappiness
-#             value: 30
-#       - name: vm
-#         params:
-#           - option: transparent_hugepages
-#             value: never

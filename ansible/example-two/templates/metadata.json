@@ -1,6 +1,0 @@
-{
-    "name": "{{ app_app.name }}",
-    "path": "{{ app_app.path }}",
-    "version": "{{ pkg_json_version.stdout }}",
-    "desc": "The Tsunami Deployment Pipeline Golden Application."
-}

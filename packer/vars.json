@@ -1,9 +1,7 @@
 {
-    "app": "tsunami-ref-app",
+    "app": "mostly-harmless",
     "product": "DevOps",
     "aws_vpc_id": "vpc-05888f065bca4b7d1",
     "aws_subnet_id": "subnet-0102fdf161708d416",
-    "amzlnx2_ami_id": "ami-08b466de09d2ea098",
-    "centos7_ami_id": "ami-04b01536e6f94fdca",
-    "aws_base_ami_id": "ami-04b01536e6f94fdca"
+    "aws_base_ami_id": "ami-08b466de09d2ea098"
 }

@@ -11,7 +11,7 @@ terraform {
 
   backend "s3" {
     bucket         = "cengage-shared-terraform-backend"
-    key            = "901254650597/devops-non-prod/tsunami-ref-app/deps/dev.tfstate"
+    key            = "901254650597/devops-non-prod/mostly-harmless/deps/dev.tfstate"
     dynamodb_table = "terraform-lock"
     role_arn       = "arn:aws:iam::084140270005:role/devops-non-prod"
     region         = "us-east-1"

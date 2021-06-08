@@ -9,10 +9,9 @@ terraform {
     aws = "3.22.0"
   }
 
-  # TODO: KEY **must** be updated to reflect environment.
   backend "s3" {
     bucket         = "cengage-shared-terraform-backend"
-    key            = "901254650597/devops-non-prod/tsunami-ref-app/dev.tfstate"
+    key            = "901254650597/devops-non-prod/mostly-harmless/dev.tfstate"
     dynamodb_table = "terraform-lock"
     role_arn       = "arn:aws:iam::084140270005:role/devops-non-prod"
     region         = "us-east-1"

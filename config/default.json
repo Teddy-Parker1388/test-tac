@@ -1,7 +1,0 @@
-{
-    "hidden_msg": "{{ shared_params.hidden_msg }}",
-    "port": "{{ params.port }}",
-    "api_token": "{{ shared_params.api_token }}",
-    "db_password": "{{ shared_params.db_password }}",
-    "code_phrase": "{{ secrets.code_phrase }}"
-}
