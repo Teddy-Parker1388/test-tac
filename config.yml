@@ -1,0 +1,46 @@
+---
+# Shared Section
+SHARED:
+  # All config files have access to any variables in the SHARED:params section
+  params:
+    hidden_msg: "The Silent Tsunami approacheth..."
+    # Provided by terraform/dependencies/output.tf:db_password
+    db_password: null
+    # Provided by terraform/dependencies/output.tf:api_token
+    api_token: null
+
+# A list of configuration files needed by your application.
+# Each file consists of:
+# * name - the name of the file in the config/ directory.
+# * metadata - metadata about the file
+#   - path: where the file should be written.  # REQUIRED
+#   - dest_name: name of the file in it's final destination.
+#                Optional. Defaults to `name` above.
+#                Usage should be limited. A good use-case is for "dot" files
+#                that you don't want to start with a `.` in the git repo, lest
+#                they be hidden, but must start with a `.` when installed.
+#                See `dot-trarc` below as an example.
+#   - user: User who owns the file.            # Optional. Default: root
+#   - group: Group access to the file.         # Optional. Default: root
+#   - perms: File Permissions.                 # Optional. Default: 0640
+# * params                                     # Optional. Defaults to empty map
+#   - Freeform mapping of environment specific parameters to their values
+#   - These params are **only** accessible to the config file they are defined under.
+FILES:
+  - name: tsunami-ref-app.service
+    metadata:
+      path: /etc/systemd/system
+  - name: default.json
+    metadata:
+      path: /opt/tsunami-ref-app/conf
+      user: web
+      group: web
+      perms: "0644" # **MUST** be double-quoted.
+    params:
+      port: 4242 # Required for each var in the template (config/default.json)
+  - name: dot-trarc
+    metadata:
+      path: /opt/tsunami-ref-app/conf
+      dest_name: .trarc
+    params:
+      log_level: verbose

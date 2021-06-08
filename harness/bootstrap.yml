@@ -1,0 +1,108 @@
+---
+################################################################################
+# NOTE:
+# The information in this file is **only** used for the initial set up of a
+# Tsunami Application in Harness.
+#
+# Changing any of these values after your application already exists in Harness
+# will **NOT HAVE ANY EFFECT**.
+################################################################################
+
+# Artifact Store and where to find your app's artifact.
+artifact:
+  # Alias to a known Artifact Server
+  # artifactory_cengage_maven | nexus_cengage_maven | nexus_mindtap_maven, nexus_mindtap_npm
+  server: artifactory_cengage_maven
+  # Artifact packaging format: ZIP | TAR | JAR | WAR, etc.
+  format: ZIP
+  # Artifact Filter (name, pattern, groupId)
+  # Artifactory:
+  #   - Path w/ wildcards: com/cengage/devops/tsunami-ref-app/**/*.zip
+  # Cengage | Nexus Maven:
+  #   - GroupId.Name: com.cengage.devops.tsunami-ref-app
+  # Nexus NPM:
+  #   - NPM package name: tsunami-ref-app
+  filter: com/cengage/devops/tsunami-ref-app/**/*.zip
+  # Source repo name for snapshots and releases
+  sources:
+    snapshots: cengage-snapshots
+    releases: cengage-releases
+
+# A list of Harness Group IDs
+notifications:
+  - CAWGpfgDSeCXBnANG3hQZA
+  - iotz5oDETravIQk3-kwGxw
+
+auto_scaling_group:
+  min_instances: 1
+  max_instances: 2
+  desired_instances: 2
+
+verification:
+  # Jenkins jobs that will run as part of the deployment process.
+  # Settings Include:
+  # * name: A descriptive name for the job
+  # * job_name: The actual job name as known to Jenkins
+  # * parameters: A mapping of parameters that the job accepts.
+  # * environments: The job will run when deployed to any of the envs in the list.
+  jenkins:
+    - name: Smoke Tests
+      job_name: tsunami-ref-app/Smoke Tests
+      parameters:
+        url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
+        env: ${env.name}
+      environments:
+        - dev
+        - qa
+        - stage
+        - perf
+        - prod
+    - name: Contract Tests
+      job_name: tsunami-ref-app/Contract Tests
+      parameters:
+        url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
+        env: ${env.name}
+      environments:
+        - qa
+        - stage
+        - prod
+    - name: Performance Tests
+      job_name: tsunami-ref-app/Performance Tests
+      parameters:
+        url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
+        env: ${env.name}
+      environments:
+        - perf
+  # DynaTrace
+  dynatrace:
+    # List each environment for which you want to activate Deployment Verification.
+    deploy_verification:
+      - prod
+    # Set the DynaTrace Service ID for each of your application's environments.
+    # These IDs can be found in DynaTrace.
+    services:
+      dev: SERVICE-E9BAE07D2971F155
+      qa: SERVICE-38142AB90A14715F
+      stage: SERVICE-A147C795226180AC
+      perf: SERVICE-D65BDE8E522F5800
+      prod: SERVICE-156452F3E3321BEF
+  # Splunk
+  splunk:
+    # List each environment for which you want to activate Deployment Verification.
+    deploy_verification:
+      - prod
+    # Set a Splunk query to use per environment that will indicate error states
+    # or anomalous behavior in your application.
+    queries:
+      dev: index=devops_prod_logs source="tsunami-ref-app-requests-dev" \[ERROR\]
+      qa: index=devops_prod_logs source="tsunami-ref-app-requests-qa" \[ERROR\]
+      stage: index=devops_prod_logs source="tsunami-ref-app-requests-stage" \[ERROR\]
+      perf: index=devops_prod_logs source="tsunami-ref-app-requests-perf" \[ERROR\]
+      prod: index=devops_prod_logs source="tsunami-ref-app-requests-prod" \[ERROR\]
+
+# Settings needed by the RFC process to help identify the application in SNOW.
+RFC:
+  # A Change Management team member can provide this value for the application.
+  - item: CD-DevOps
+  # Valid values: Internal Application|External Application
+  - sub_category: Internal Application

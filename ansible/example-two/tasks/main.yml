@@ -1,0 +1,37 @@
+---
+# ------------------------------------------------------------------------------
+# --- Example Two ---
+# This example demonstrates doing things you might normally do in ansible code.
+#
+# - It installs some additional software packages
+# - Copies a static file to the image
+# - Runs a command and captures the output, then uses that output in processing
+#   a template
+# ------------------------------------------------------------------------------
+- name: Install Extra Packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ extra_pkgs }}"
+
+- name: Copy file
+  copy:
+    src: files/hollow-men
+    dest: /tmp/hollow-men
+    owner: "{{ app_app.user }}"
+    group: "{{ app_app.group }}"
+    mode: "0644"
+
+- name: Parse package.json
+  command:
+    chdir: "{{ app_app.path }}"
+    cmd: jq .version package.json
+  register: pkg_json_version
+
+- name: Write Metadata
+  template:
+    src: metadata.json
+    dest: "{{ app_app.path }}/metadata.json"
+    owner: root
+    group: root
+    mode: "0644"

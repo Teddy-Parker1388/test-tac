@@ -1,0 +1,7 @@
+tfChecker([
+    app_env: "dev",
+    image_id: "ami-0885b1f6bd170450c"
+    ],
+    [:],
+    "./terraform"
+)

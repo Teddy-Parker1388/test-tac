@@ -1,0 +1,4 @@
+---
+extra_pkgs:
+  - epel-release
+  - jq
