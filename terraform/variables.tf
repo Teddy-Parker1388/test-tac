@@ -19,10 +19,15 @@ variable "app_product" {
   default     = "DevOps"
 }
 
-variable "image_id" {
-  description = "The EC2 image ID to launch from packer build"
-  type        = string
-}
+// variable "image_name" {
+//   type = string
+//   default = "mostly-harmless"
+// }
+// variable "image_id" {
+//   description = "The EC2 image ID to launch from packer build"
+//   type        = string
+//   default     = "ami-07248b57496b91680"
+// }
 
 // -----------------------------------------------------------------------------
 // ENVIRONMENT SPECIFIC CHANGES REQUIRED BELOW
@@ -59,15 +64,15 @@ variable "public_subnets" {
 
 // TODO: INSTANCE_TYPE: Must change value to reflect the desired EC2 size for environment.
 variable "instance_type" {
+  type    = string
   default = "t2.micro"
 }
-// -----------------------------------------------------------------------------
 
-variable "enabled" {
-  type        = string
-  description = "Whether to create the resources. Set to `false` to prevent the module from creating any resources"
-  default     = "true"
+variable "instance_count" {
+  type    = number
+  default = 4
 }
+// -----------------------------------------------------------------------------
 
 variable "add_to_logicmonitor" {
   type        = string
@@ -93,10 +98,6 @@ variable "ingress_alb_private" {
     {
       rule        = "http-80-tcp"
       cidr_blocks = "10.0.0.0/8"
-    },
-    {
-      rule        = "http-8080-tcp"
-      cidr_blocks = "10.0.0.0/8"
     }
   ]
 }
@@ -104,13 +105,13 @@ variable "ingress_alb_private" {
 variable "app_port" {
   description = "The port on which the application listens"
   type        = number
-  default     = 4242
+  default     = 8080
 }
 
 variable "app_healthcheck_port" {
   description = "The port to use for application health checks"
   type        = number
-  default     = 4242
+  default     = 8080
 }
 
 variable "ingress_instance" {
@@ -118,17 +119,7 @@ variable "ingress_instance" {
   type        = list(map(string))
   default = [
     {
-      // **Must** match `app_port` variable above
-      // Can't use vars in a variables file :(
-      // ----------------------------------------
-      // Use this 'rule' for Standard Ports (80, 8080, 443, 8443)
-      // rule        = "http-PORT-tcp"
-      // ----------------------------------------
-      // Otherwise, must define specific from/to/protocol
-      description = "Application Port"
-      from_port   = 4242
-      to_port     = 4242
-      protocol    = "tcp"
+      rule        = "http-8080-tcp",
       cidr_blocks = "10.0.0.0/8"
     },
     {

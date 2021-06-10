@@ -12,10 +12,11 @@ output "alb_dns_name_private" {
   value       = module.app_lb_private.this_lb_dns_name
 }
 
-output "autoscaling_group_name" {
-  description = "The autoscaling group name"
-  value       = module.autoscaling_group.autoscaling_group_name
-}
+// TODO: DELETE ME
+// output "autoscaling_group_name" {
+//   description = "The autoscaling group name"
+//   value       = module.autoscaling_group.autoscaling_group_name
+// }
 
 output "region" {
   value = var.region
@@ -25,16 +26,23 @@ output "vpc" {
   value = var.vpc_id
 }
 
-output "instanceTags" {
-  value = "TODO.TAGS"
+output "ssh_private_key_pem" {
+  value = tls_private_key.ssh_key.private_key_pem
 }
 
-output "alb_target_groups" {
-  description = "ALB Target Group ARN"
-  value       = [module.app_lb_private.target_group_arns[1], module.app_lb_public.target_group_arns[0]]
-}
+// TODO: ADD ME
+// output "instanceTags" {
+//   value = "TODO.TAGS"
+// }
 
-output "stage_target_group" {
-  description = "Staging Target Group ARN"
-  value       = module.app_lb_private.target_group_arns[0]
-}
+// TODO: ?????
+// output "alb_target_groups" {
+//   description = "ALB Target Group ARN"
+//   value       = [module.app_lb_private.target_group_arns[1], module.app_lb_public.target_group_arns[0]]
+// }
+
+// TODO: ????
+// output "stage_target_group" {
+//   description = "Staging Target Group ARN"
+//   value       = module.app_lb_private.target_group_arns[0]
+// }

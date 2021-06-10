@@ -27,8 +27,24 @@ data "aws_vpc" "selected" {
 locals {
   common_tags = {
     Name        = var.app_name
-    Environment = var.app_env
     Product     = var.app_product
+    App         = var.app_name
+    Environment = var.app_env
+  }
+}
+
+data "aws_ami" "base_image" {
+  // executable_users = ["self"]
+  most_recent = true
+  // name_regex       = "^myami-\\d{3}"
+  owners = ["self"]
+
+  // NOTE:
+  // Alternatively, this could be the Base Tsunami AMI for either
+  // CentOS-7 or AmazonLinux2
+  filter {
+    name   = "name"
+    values = ["${var.app_name}-${var.app_env}*"]
   }
 }
 
@@ -44,6 +60,40 @@ module "sec_grp_instance" {
   ingress_with_cidr_blocks = var.ingress_instance
   egress_with_cidr_blocks  = var.egress_all
 }
+
+// SSH Key Pair
+resource "tls_private_key" "ssh_key" {
+  algorithm = "RSA"
+}
+
+resource "aws_key_pair" "ssh_key_pair" {
+  key_name   = "${var.app_name}-key-pair"
+  public_key = tls_private_key.ssh_key.public_key_openssh
+}
+
+// EC2 Instances
+resource "aws_instance" "app_instance" {
+  count = var.instance_count
+
+  // ami           = var.image_id
+  ami           = data.aws_ami.base_image.id
+  instance_type = var.instance_type
+
+  subnet_id = element(
+    var.private_subnets,
+    count.index % length(var.private_subnets)
+  )
+
+  key_name               = aws_key_pair.ssh_key_pair.key_name
+  vpc_security_group_ids = [module.sec_grp_instance.this_security_group_id]
+
+  tags = merge(
+    local.common_tags,
+    { Name = "${var.app_name}-${count.index}" }
+  )
+}
+
+// TODO: how to attach instances to LBs
 
 # ALB Security Group - Public
 module "sec_grp_alb_public" {
@@ -69,40 +119,41 @@ module "sec_grp_alb_private" {
   egress_with_cidr_blocks  = var.egress_all
 }
 
-#Creates autoscaling group, launch configuration, asg policy and cloudwatch alarms with the specified AMI
-module "autoscaling_group" {
-  source = "git::ssh://git@stash.cengage.com:7999/tm/aws-autoscaling-from-launchtemplate.git?ref=1.1.0"
+// TODO: DELETE ME
+// #Creates autoscaling group, launch configuration, asg policy and cloudwatch alarms with the specified AMI
+// module "autoscaling_group" {
+//   source = "git::ssh://git@stash.cengage.com:7999/tm/aws-autoscaling-from-launchtemplate.git?ref=1.1.0"
 
-  name               = "${var.app_name}-${var.app_env}-"
-  instance_type      = var.instance_type
-  image_id           = var.image_id
-  security_group_ids = [module.sec_grp_instance.this_security_group_id]
-  subnet_ids         = var.private_subnets
-  health_check_type  = "ELB"
-  // Should be kept at 0 since Harness handles the ASG details on deployment
-  min_size = 0
-  // Should be kept at 0 since Harness handles the ASG details on deployment
-  max_size                    = 0
-  associate_public_ip_address = true
-  target_group_arns           = [module.app_lb_private.target_group_arns[0], module.app_lb_public.target_group_arns[0]]
-  health_check_grace_period   = 30
-  default_cooldown            = 30
+//   name               = "${var.app_name}-${var.app_env}-"
+//   instance_type      = var.instance_type
+//   image_id           = var.image_id
+//   security_group_ids = [module.sec_grp_instance.this_security_group_id]
+//   subnet_ids         = var.private_subnets
+//   health_check_type  = "ELB"
+//   // Should be kept at 0 since Harness handles the ASG details on deployment
+//   min_size = 0
+//   // Should be kept at 0 since Harness handles the ASG details on deployment
+//   max_size                    = 0
+//   associate_public_ip_address = true
+//   target_group_arns           = [module.app_lb_private.target_group_arns[0], module.app_lb_public.target_group_arns[0]]
+//   health_check_grace_period   = 30
+//   default_cooldown            = 30
 
-  tags = merge(local.common_tags, {
-    "AddToLogicMonitor" = var.add_to_logicmonitor
-  })
+//   tags = merge(local.common_tags, {
+//     "AddToLogicMonitor" = var.add_to_logicmonitor
+//   })
 
-  ##  Autoscaling policies and Cloudwatch alarms
-  autoscaling_policies = "target_tracking"
-  scaling_policy_name  = "${var.app_name}-${var.app_env}-scaling-policy"
-  target_tracking_scaling = [
-    {
-      scaling_metric = "ASGAverageCPUUtilization"
-      scaling_value  = 50
-    }
-  ]
+//   ##  Autoscaling policies and Cloudwatch alarms
+//   autoscaling_policies = "target_tracking"
+//   scaling_policy_name  = "${var.app_name}-${var.app_env}-scaling-policy"
+//   target_tracking_scaling = [
+//     {
+//       scaling_metric = "ASGAverageCPUUtilization"
+//       scaling_value  = 50
+//     }
+//   ]
 
-}
+// }
 
 # Private ALB
 module "app_lb_private" {
@@ -120,25 +171,7 @@ module "app_lb_private" {
 
   target_groups = [
     {
-      name_prefix          = "Blue-"
-      backend_protocol     = "HTTP"
-      backend_port         = var.app_port
-      target_type          = "instance"
-      deregistration_delay = 10
-      health_check = {
-        enabled             = true
-        interval            = 30
-        path                = "/"
-        port                = var.app_healthcheck_port
-        healthy_threshold   = 3
-        unhealthy_threshold = 3
-        timeout             = 6
-        protocol            = "HTTP"
-        matcher             = "200"
-      }
-    },
-    {
-      name_prefix          = "Green-"
+      name_prefix          = "Pvt-"
       backend_protocol     = "HTTP"
       backend_port         = var.app_port
       target_type          = "instance"
@@ -160,18 +193,21 @@ module "app_lb_private" {
   http_tcp_listeners = [
     # Forward action is default, either when defined or undefined
     {
-      port               = 8080
-      protocol           = "HTTP"
-      target_group_index = 0
-    },
-    {
       port               = 80
       protocol           = "HTTP"
-      target_group_index = 1
+      target_group_index = 0
     }
   ]
 
   target_group_tags = local.common_tags
+}
+
+resource "aws_lb_target_group_attachment" "register_instances_private" {
+  count = var.instance_count
+
+  target_group_arn = module.app_lb_private.target_group_arns[0]
+  target_id        = aws_instance.app_instance[count.index].id
+  port             = var.app_port
 }
 
 # Public ALB
@@ -190,7 +226,7 @@ module "app_lb_public" {
 
   target_groups = [
     {
-      name_prefix          = "Live-"
+      name_prefix          = "Pub-"
       backend_protocol     = "HTTP"
       backend_port         = var.app_port
       target_type          = "instance"
@@ -220,3 +256,19 @@ module "app_lb_public" {
 
   target_group_tags = local.common_tags
 }
+
+resource "aws_lb_target_group_attachment" "register_instances_public" {
+  count = var.instance_count
+
+  target_group_arn = module.app_lb_public.target_group_arns[0]
+  target_id        = aws_instance.app_instance[count.index].id
+  port             = var.app_port
+}
+
+
+
+
+
+
+
+// 
