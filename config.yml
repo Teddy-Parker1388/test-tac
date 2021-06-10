@@ -3,8 +3,8 @@ SHARED:
   params: {}
 
 FILES:
-  - name: default.conf
+  - name: test.conf
     metadata:
-      path: /etc/nginx/conf.d/default.conf
+      path: /etc/nginx/conf.d/test.conf
     params:
       port: 8080
