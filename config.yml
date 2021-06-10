@@ -3,8 +3,8 @@ SHARED:
   params: {}
 
 FILES:
-  - name: default.json
+  - name: default.conf
     metadata:
-      path: /etc/nginx/conf.d/default.json
+      path: /etc/nginx/conf.d/default.conf
     params:
       port: 8080
