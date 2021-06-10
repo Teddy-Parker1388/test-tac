@@ -5,6 +5,6 @@ SHARED:
 FILES:
   - name: test.conf
     metadata:
-      path: /etc/nginx/conf.d/test.conf
+      path: /etc/nginx/conf.d
     params:
       port: 8080
