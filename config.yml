@@ -2,12 +2,9 @@
 SHARED:
   params: {}
 
-FILES: []
-  # - name: default.json
-  #   metadata:
-  #     path: /opt/tsunami-ref-app/conf
-  #     user: web
-  #     group: web
-  #     perms: "0644" # **MUST** be double-quoted.
-  #   params:
-  #     port: 4242 # Required for each var in the template (config/default.json)
+FILES:
+  - name: default.json
+    metadata:
+      path: /etc/nginx/conf.d/default.json
+    params:
+      port: 8080
