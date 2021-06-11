@@ -3,8 +3,14 @@ SHARED:
   params: {}
 
 FILES:
-  - name: test.conf
+  - name: mostly-harmless.conf
     metadata:
       path: /etc/nginx/conf.d
     params:
       port: 8080
+  - name: index.html
+    metadata:
+      path: /opt/mostly-harmless/html
+      owner: fprefect
+      group: fprefect
+      mode: 0644
