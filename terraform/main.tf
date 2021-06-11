@@ -34,10 +34,8 @@ locals {
 }
 
 data "aws_ami" "base_image" {
-  // executable_users = ["self"]
   most_recent = true
-  // name_regex       = "^myami-\\d{3}"
-  owners = ["self"]
+  owners      = ["self"]
 
   // NOTE:
   // Alternatively, this could be the Base Tsunami AMI for either
@@ -93,8 +91,6 @@ resource "aws_instance" "app_instance" {
   )
 }
 
-// TODO: how to attach instances to LBs
-
 # ALB Security Group - Public
 module "sec_grp_alb_public" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
@@ -118,42 +114,6 @@ module "sec_grp_alb_private" {
   ingress_with_cidr_blocks = var.ingress_alb_private
   egress_with_cidr_blocks  = var.egress_all
 }
-
-// TODO: DELETE ME
-// #Creates autoscaling group, launch configuration, asg policy and cloudwatch alarms with the specified AMI
-// module "autoscaling_group" {
-//   source = "git::ssh://git@stash.cengage.com:7999/tm/aws-autoscaling-from-launchtemplate.git?ref=1.1.0"
-
-//   name               = "${var.app_name}-${var.app_env}-"
-//   instance_type      = var.instance_type
-//   image_id           = var.image_id
-//   security_group_ids = [module.sec_grp_instance.this_security_group_id]
-//   subnet_ids         = var.private_subnets
-//   health_check_type  = "ELB"
-//   // Should be kept at 0 since Harness handles the ASG details on deployment
-//   min_size = 0
-//   // Should be kept at 0 since Harness handles the ASG details on deployment
-//   max_size                    = 0
-//   associate_public_ip_address = true
-//   target_group_arns           = [module.app_lb_private.target_group_arns[0], module.app_lb_public.target_group_arns[0]]
-//   health_check_grace_period   = 30
-//   default_cooldown            = 30
-
-//   tags = merge(local.common_tags, {
-//     "AddToLogicMonitor" = var.add_to_logicmonitor
-//   })
-
-//   ##  Autoscaling policies and Cloudwatch alarms
-//   autoscaling_policies = "target_tracking"
-//   scaling_policy_name  = "${var.app_name}-${var.app_env}-scaling-policy"
-//   target_tracking_scaling = [
-//     {
-//       scaling_metric = "ASGAverageCPUUtilization"
-//       scaling_value  = 50
-//     }
-//   ]
-
-// }
 
 # Private ALB
 module "app_lb_private" {
@@ -264,11 +224,3 @@ resource "aws_lb_target_group_attachment" "register_instances_public" {
   target_id        = aws_instance.app_instance[count.index].id
   port             = var.app_port
 }
-
-
-
-
-
-
-
-// 
