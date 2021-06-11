@@ -11,6 +11,6 @@ FILES:
   - name: index.html
     metadata:
       path: /opt/mostly-harmless/html
-      owner: fprefect
+      user: fprefect
       group: fprefect
-      mode: 0644
+      perms: "0644"
