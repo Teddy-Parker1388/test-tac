@@ -21,6 +21,10 @@ output "ssh_private_key_pem" {
   value = tls_private_key.ssh_key.private_key_pem
 }
 
+output "instance_ips" {
+  value = aws_instance.app_instance.*.private_ip
+}
+
 output "instance_tags" {
   value = {
     Product     = var.app_product

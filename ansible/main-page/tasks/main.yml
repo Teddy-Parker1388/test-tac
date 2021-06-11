@@ -1,0 +1,18 @@
+---
+
+- name: Ensure Dest Dirs Exist
+  file:
+    path: "{{ base_path }}/{{ item }}"
+    state: directory
+  loop:
+    - html
+    - html/images
+
+- name: Copy Files
+  copy:
+    src: "{{ item.file }}"
+    dest: "{{ base_path }}/{{ item.dir }}/{{ item.file }}"
+    mode: "0644"
+  loop:
+    - { file: "index.html", dir: "html" }
+    - { file: "mostly-harmless.jpg", dir: "html/images" }
