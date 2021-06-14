@@ -10,4 +10,4 @@ monitoring:
   enable_netdata: no
   enable_dynatrace: no
 
-devices: []
+# devices: []
