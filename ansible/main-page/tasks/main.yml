@@ -16,3 +16,4 @@
   loop:
     - { file: "index.html", dir: "html" }
     - { file: "mostly-harmless.jpg", dir: "html/images" }
+    - { file: "mostly-harmless-2.jpg", dir: "html/images" }
