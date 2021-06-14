@@ -8,9 +8,3 @@ FILES:
       path: /etc/nginx/conf.d
     params:
       port: 8080
-  - name: index.html
-    metadata:
-      path: /opt/mostly-harmless/html
-      user: fprefect
-      group: fprefect
-      perms: "0644"
