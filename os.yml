@@ -9,4 +9,4 @@ os: amazon_linux2
 #   limitmemlock: 70000
 
 tuned:
-  profile: throughput-performance
+  profile: balanced
