@@ -10,7 +10,7 @@
     msg: "*** this is task 1 ***"
 
 - include_role: 
-    name: "{{ ansible_path }}/main-page"
+    name: "{{ app_ansible_path }}/main-page"
 
 - name: TASK2
   debug:
