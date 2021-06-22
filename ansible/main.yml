@@ -1,17 +1,3 @@
 ---
-# - name: "Mostly Harmless"
-#   hosts: all
-#   become: yes
-
-#   roles:
-#     - main-page
-- name: TASK1
-  debug:
-    msg: "*** this is task 1 ***"
-
 - include_role: 
     name: "{{ app_ansible_path }}/main-page"
-
-- name: TASK2
-  debug:
-    msg: "*** this is task 2 ***"
