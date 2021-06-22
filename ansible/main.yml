@@ -10,7 +10,7 @@
     msg: "*** this is task 1 ***"
 
 - include_role: 
-    name: main-page
+    name: ./main-page
 
 - name: TASK2
   debug:
