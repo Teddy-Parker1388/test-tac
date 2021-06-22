@@ -1,7 +1,14 @@
 ---
-- name: "Mostly Harmless"
-  hosts: all
-  become: yes
+# - name: "Mostly Harmless"
+#   hosts: all
+#   become: yes
 
-  roles:
-    - main-page
+#   roles:
+#     - main-page
+- name: TASK1
+  debug:
+    msg: "*** this is task 1 ***"
+
+- name: TASK2
+  debug:
+    msg: "*** this is task 2 ***"
