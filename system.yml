@@ -6,8 +6,8 @@ users:
   - fprefect:fprefect
 
 monitoring:
-  enable_snmp: no
-  enable_netdata: no
-  enable_dynatrace: no
+  enable_snmp: yes
+  enable_netdata: yes
+  enable_dynatrace: yes
 
 # devices: []
