@@ -10,3 +10,9 @@ splunk: []
 #     index: None
 #     sourcetype: None
 #     source: None
+
+# App configurable settings for the SplunkForwarder
+splunk_conf:
+  # `limits.conf`
+  limits:
+    ghoti: 'coo-coo'
