@@ -65,7 +65,7 @@ variable "public_subnets" {
 // TODO: INSTANCE_TYPE: Must change value to reflect the desired EC2 size for environment.
 variable "instance_type" {
   type    = string
-  default = "t2.micro"
+  default = "t3.small"
 }
 
 variable "instance_count" {
