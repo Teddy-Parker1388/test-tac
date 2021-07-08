@@ -73,7 +73,6 @@ resource "aws_key_pair" "ssh_key_pair" {
 resource "aws_instance" "app_instance" {
   count = var.instance_count
 
-  // ami           = var.image_id
   ami           = data.aws_ami.base_image.id
   instance_type = var.instance_type
 

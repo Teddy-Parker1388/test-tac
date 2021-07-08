@@ -19,16 +19,6 @@ variable "app_product" {
   default     = "DevOps"
 }
 
-// variable "image_name" {
-//   type = string
-//   default = "mostly-harmless"
-// }
-// variable "image_id" {
-//   description = "The EC2 image ID to launch from packer build"
-//   type        = string
-//   default     = "ami-07248b57496b91680"
-// }
-
 // -----------------------------------------------------------------------------
 // ENVIRONMENT SPECIFIC CHANGES REQUIRED BELOW
 // -----------------------------------------------------------------------------
