@@ -1,12 +1,20 @@
 
-// output "alb_dns_name_public" {
-//   description = "The DNS name of the load balancer."
-//   value       = module.app_lb_public.this_lb_dns_name
-// }
+output "alb_dns_name_public" {
+  description = "The DNS name of the public load balancer."
+  value       = module.app_lb_public.this_lb_dns_name
+}
 
 output "alb_dns_name_private" {
-  description = "The DNS name of the load balancer."
+  description = "The DNS name of the private load balancer."
   value       = module.app_lb_private.this_lb_dns_name
+}
+
+output "private_alb_tg_arn" {
+  value = module.app_lb_private.target_group_arns[0]
+}
+
+output "public_alb_tg_arn" {
+  value = module.app_lb_public.target_group_arns[0]
 }
 
 output "region" {
