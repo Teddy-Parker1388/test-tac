@@ -94,7 +94,7 @@ resource "aws_instance" "app_instance" {
 resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
   count = var.instance_count
 
-  alarm_name          = "${var.app_name}-${count.index}-reboot"
+  alarm_name          = "${var.app_name}_${count.index}_${aws_instance.app_instance[count.index].id}_reboot"
   alarm_description   = "Reboot instance on failure."
   metric_name         = "StatusCheckFailed_Instance"
   namespace           = "AWS/EC2"
