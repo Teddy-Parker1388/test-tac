@@ -90,6 +90,28 @@ resource "aws_instance" "app_instance" {
   )
 }
 
+// CloudWatch Alarms for Instances
+resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
+  count = var.instance_count
+
+  alarm_name          = "${var.app_name}-${count.index}-reboot"
+  alarm_description   = "Reboot instance on failure."
+  metric_name         = "StatusCheckFailed_Instance"
+  namespace           = "AWS/EC2"
+  comparison_operator = "GreaterThanThreshold"
+  threshold           = "0"
+  statistic           = "Minimum"
+  period              = "300"
+  evaluation_periods  = 1
+  datapoints_to_alarm = 1
+
+  dimensions = {
+    InstanceId = aws_instance.app_instance[count.index].id
+  }
+
+  alarm_actions = ["arn:aws:automate:${var.region}:ec2:reboot"]
+}
+
 # ALB Security Group - Public
 module "sec_grp_alb_public" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
