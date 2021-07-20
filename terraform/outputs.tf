@@ -34,10 +34,6 @@ output "instance_ips" {
   value = aws_instance.app_instance.*.private_ip
 }
 
-output "instance_tags2" {
-  value = aws_instance.app_instance[0].tags
-}
-
 output "instance_tags" {
   value = {
     Product     = var.app_product
