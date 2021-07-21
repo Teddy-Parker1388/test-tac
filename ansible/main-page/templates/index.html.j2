@@ -13,7 +13,7 @@
 </head>
 
 <body style="background-color: black;">
-    <img src="{{ ['./images/mostly-harmless.jpg', './images/mostly-harmless.jpg'] | random }}" class="center">
+    <img src="./images/mostly-harmless-{{ env | default('default') }}.jpg" class="center">
 </body>
 
 </html>
