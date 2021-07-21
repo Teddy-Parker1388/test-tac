@@ -49,8 +49,8 @@ data "aws_ami" "base_image" {
 # Instance Security Group
 module "sec_grp_instance" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
-  name        = "${var.app_name}-instance"
-  description = "${var.app_name} instance security group"
+  name        = "${var.app_name}-${var.app_env}-instance"
+  description = "${var.app_name}-${var.app_env} instance security group"
   vpc_id      = data.aws_vpc.selected.id
 
   tags = local.common_tags
@@ -65,7 +65,7 @@ resource "tls_private_key" "ssh_key" {
 }
 
 resource "aws_key_pair" "ssh_key_pair" {
-  key_name   = "${var.app_name}-key-pair"
+  key_name   = "${var.app_name}-${var.app_env}-key-pair"
   public_key = tls_private_key.ssh_key.public_key_openssh
 }
 
@@ -94,7 +94,7 @@ resource "aws_instance" "app_instance" {
 resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
   count = var.instance_count
 
-  alarm_name          = "${var.app_name}_${count.index}_${aws_instance.app_instance[count.index].id}_reboot"
+  alarm_name          = "${var.app_name}-${var.app_env}_${count.index}_${aws_instance.app_instance[count.index].id}_reboot"
   alarm_description   = "Reboot instance on failure."
   metric_name         = "StatusCheckFailed_Instance"
   namespace           = "AWS/EC2"
@@ -115,8 +115,8 @@ resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
 # ALB Security Group - Public
 module "sec_grp_alb_public" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
-  name        = "${var.app_name}-alb-public"
-  description = "${var.app_name} Public ALB security group"
+  name        = "${var.app_name}-${var.app_env}-alb-public"
+  description = "${var.app_name}-${var.app_env} Public ALB security group"
   vpc_id      = data.aws_vpc.selected.id
 
   tags                     = local.common_tags
@@ -127,8 +127,8 @@ module "sec_grp_alb_public" {
 # ALB Security Group - Private
 module "sec_grp_alb_private" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
-  name        = "${var.app_name}-alb-private"
-  description = "${var.app_name} Private ALB security group"
+  name        = "${var.app_name}-${var.app_env}-alb-private"
+  description = "${var.app_name}-${var.app_env} Private ALB security group"
   vpc_id      = data.aws_vpc.selected.id
 
   tags                     = local.common_tags
