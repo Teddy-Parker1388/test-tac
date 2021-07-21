@@ -14,8 +14,9 @@
     dest: "{{ base_path }}/{{ item.dir }}/{{ item.file }}"
     mode: "0644"
   loop:
-    - { file: "mostly-harmless.jpg", dir: "html/images" }
-    - { file: "mostly-harmless-2.jpg", dir: "html/images" }
+    - { file: "mostly-harmless-dev.jpg",     dir: "html/images" }
+    - { file: "mostly-harmless-qa.jpg",      dir: "html/images" }
+    - { file: "mostly-harmless-default.jpg", dir: "html/images" }
 
 - name: Install index.html
   template:
