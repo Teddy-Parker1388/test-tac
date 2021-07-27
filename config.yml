@@ -13,3 +13,6 @@ FILES:
       path: /opt/mostly-harmless/conf
     params:
       port: 4242
+  - name: mostly-harmless.service
+    metadata:
+      path: /etc/systemd/system
