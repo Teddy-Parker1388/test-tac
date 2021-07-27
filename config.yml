@@ -11,6 +11,8 @@ FILES:
   - name: server.json
     metadata:
       path: /opt/mostly-harmless/conf
+      user: "{{ app_app.user }}"
+      group: "{{ app_app.group }}"
     params:
       port: 4242
   - name: mostly-harmless.service
