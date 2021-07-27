@@ -8,3 +8,8 @@ FILES:
       path: /etc/nginx/conf.d
     params:
       port: 8080
+  - name: server.json
+    metadata:
+      path: /opt/mostly-harmless/conf
+    params:
+      port: 4242
