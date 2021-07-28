@@ -1,3 +1,4 @@
 {
-    "port": "{{ params.port }}"
+    "port": "{{ params.port }}",
+    "comment": "Just Another Day"
 }
