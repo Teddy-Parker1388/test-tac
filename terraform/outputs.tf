@@ -31,7 +31,7 @@ output "ssh_private_key_pem" {
 }
 
 output "instance_ips" {
-  value = aws_instance.app_instance.*.private_ip
+  value = join("\n", aws_instance.app_instance.*.private_ip)
 }
 
 output "instance_tags" {
