@@ -6,6 +6,7 @@ FILES:
   - name: mostly-harmless.conf
     metadata:
       path: /etc/nginx/conf.d
+      restart: nginx
     params:
       port: 8080
       api_port: 4242

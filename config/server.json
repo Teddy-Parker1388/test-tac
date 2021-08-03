@@ -1,5 +1,5 @@
 {
     "port": "{{ params.port }}",
     "access_code": "{{ secrets.access_code }}",
-    "comment": "Alfred E. Neuman"
+    "comment": "Arthur Dent"
 }

@@ -1,3 +1,0 @@
----
-- include_role: 
-    name: "{{ app_ansible_path }}/main-page"
