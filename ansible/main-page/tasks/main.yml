@@ -8,15 +8,11 @@
     - html
     - html/images
 
-- name: Copy Files
+- name: Copy Splash Image
   copy:
-    src: "{{ item.file }}"
-    dest: "{{ base_path }}/{{ item.dir }}/{{ item.file }}"
+    src: "mostly-harmless-{{ env }}.jpg"
+    dest: "{{ base_path }}/html/images/mostly-harmless-{{ env }}.jpg"
     mode: "0644"
-  loop:
-    - { file: "mostly-harmless-dev.jpg",     dir: "html/images" }
-    - { file: "mostly-harmless-qa.jpg",      dir: "html/images" }
-    - { file: "mostly-harmless-default.jpg", dir: "html/images" }
 
 - name: Install index.html
   template:
