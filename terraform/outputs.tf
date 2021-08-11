@@ -13,6 +13,10 @@ output "private_alb_tg_arn" {
   value = module.app_lb_private.target_group_arns[0]
 }
 
+output "test_alb_tg_arn" {
+  value = module.app_lb_private.target_group_arns[1]
+}
+
 output "public_alb_tg_arn" {
   value = module.app_lb_public.target_group_arns[0]
 }

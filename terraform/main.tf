@@ -168,6 +168,24 @@ module "app_lb_private" {
         protocol            = "HTTP"
         matcher             = "200"
       }
+    },
+    {
+      name_prefix          = "Tst-"
+      backend_protocol     = "HTTP"
+      backend_port         = var.app_port
+      target_type          = "instance"
+      deregistration_delay = 10
+      health_check = {
+        enabled             = true
+        interval            = 30
+        path                = "/"
+        port                = var.app_healthcheck_port
+        healthy_threshold   = 3
+        unhealthy_threshold = 3
+        timeout             = 6
+        protocol            = "HTTP"
+        matcher             = "200"
+      }
     }
   ]
 
@@ -177,7 +195,12 @@ module "app_lb_private" {
       port               = 80
       protocol           = "HTTP"
       target_group_index = 0
-    }
+    },
+    {
+      port               = 8080
+      protocol           = "HTTP"
+      target_group_index = 1
+    },
   ]
 
   target_group_tags = local.common_tags
