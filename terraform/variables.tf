@@ -88,6 +88,10 @@ variable "ingress_alb_private" {
     {
       rule        = "http-80-tcp"
       cidr_blocks = "10.0.0.0/8"
+    },
+    {
+      rule        = "http-8080-tcp"
+      cidr_blocks = "10.0.0.0/8"
     }
   ]
 }
