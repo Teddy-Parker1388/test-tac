@@ -5,12 +5,15 @@ path: /opt/mostly-harmless
 user: fprefect
 group: fprefect
 
-splunk: []
-#   - log_path: None
-#     index: None
-#     sourcetype: None
-#     source: None
-
+splunk:
+  - log_path: "/opt/mostly-harmless/logs/request.log"
+    index: devops_prod_logs
+    sourcetype: generic_single_line
+    source: mostly-harmless-app-requests-dev
+  - log_path: "/var/log/nginx/access.log"
+    index: devops_prod_logs
+    sourcetype: generic_single_line
+    source: mostly-harmless-nginx-access-dev
 # App configurable settings for the SplunkForwarder
 # splunk_conf:
 #   # `limits.conf`
