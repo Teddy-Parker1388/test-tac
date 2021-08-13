@@ -14,8 +14,10 @@ splunk:
     index: devops_prod_logs
     sourcetype: generic_single_line
     source: mostly-harmless-nginx-access-dev
+
 # App configurable settings for the SplunkForwarder
-# splunk_conf:
-#   # `limits.conf`
-#   limits:
-#     ghoti: 'coo-coo'
+splunk_conf:
+  # `limits.conf`
+  limits:
+    thruput:
+      maxKBps: 10240
