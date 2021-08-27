@@ -1,5 +1,5 @@
 <html>
-<title>Mostly Harmless: {{ inventory_hostname }}</title>
+<title>Mostly Harmless: {{ env }} - {{ inventory_hostname }}</title>
 
 <head>
     <style>
@@ -9,11 +9,26 @@
             margin-right: auto;
             width: 50%;
         }
+
+        a:link {
+            color: chartreuse;
+        }
+
+        a:visited {
+            color: chartreuse;
+        }
+
+        a:hover {
+            color: orange;
+        }
     </style>
 </head>
 
 <body style="background-color: black;">
     <img src="./images/mostly-harmless-{{ env | default('default') }}.jpg" class="center">
+    <p class="center" style="color: chartreuse;">
+        <a href="/api">API</a> | <a href="/api/random">Random Data</a>
+    </p>
 </body>
 
 </html>
