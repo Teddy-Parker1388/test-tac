@@ -3,10 +3,10 @@ provider "aws" {
 }
 
 terraform {
-  required_version = "~> 0.13.0"
+  required_version = "~> 1.0"
 
   required_providers {
-    aws = "3.22.0"
+    aws = "3.56"
   }
 
   backend "s3" {
@@ -48,7 +48,7 @@ data "aws_ami" "base_image" {
 
 # Instance Security Group
 module "sec_grp_instance" {
-  source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
+  source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.2.0"
   name        = "${var.app_name}-${var.app_env}-instance"
   description = "${var.app_name}-${var.app_env} instance security group"
   vpc_id      = data.aws_vpc.selected.id
@@ -114,7 +114,7 @@ resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
 
 # ALB Security Group - Public
 module "sec_grp_alb_public" {
-  source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
+  source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.2.0"
   name        = "${var.app_name}-${var.app_env}-alb-public"
   description = "${var.app_name}-${var.app_env} Public ALB security group"
   vpc_id      = data.aws_vpc.selected.id
@@ -126,7 +126,7 @@ module "sec_grp_alb_public" {
 
 # ALB Security Group - Private
 module "sec_grp_alb_private" {
-  source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.1.0"
+  source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.2.0"
   name        = "${var.app_name}-${var.app_env}-alb-private"
   description = "${var.app_name}-${var.app_env} Private ALB security group"
   vpc_id      = data.aws_vpc.selected.id
@@ -138,7 +138,7 @@ module "sec_grp_alb_private" {
 
 # Private ALB
 module "app_lb_private" {
-  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.1.0"
+  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.2.0"
 
   load_balancer_type = "application"
   name               = "${var.app_name}-${var.app_env}-private"
@@ -216,7 +216,7 @@ resource "aws_lb_target_group_attachment" "register_instances_private" {
 
 # Public ALB
 module "app_lb_public" {
-  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.1.0"
+  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.2.0"
 
   load_balancer_type = "application"
   name               = "${var.app_name}-${var.app_env}-public"
