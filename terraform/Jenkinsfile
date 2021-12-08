@@ -1,6 +1,5 @@
 tfChecker([
     app_env: "dev",
-    image_id: "ami-0885b1f6bd170450c",
     vpc_id: "vpc-05888f065bca4b7d1"
     ],
     [:],
