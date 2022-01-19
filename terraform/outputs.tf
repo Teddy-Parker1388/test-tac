@@ -38,10 +38,13 @@ output "instance_ips" {
   value = join("\n", aws_instance.app_instance.*.private_ip)
 }
 
-output "instance_tags" {
-  value = {
-    Product     = var.app_product
-    App         = var.app_name
-    Environment = var.app_env
-  }
+output "inventory" {
+  value = join(
+    "\n",
+    formatlist(
+      "%s tsunami_node_id=%s",
+      aws_instance.app_instance.*.private_ip,
+      aws_instance.app_instance.*.tags.TsunamiNodeId
+    )
+  )
 }
