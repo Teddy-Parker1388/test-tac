@@ -86,7 +86,10 @@ resource "aws_instance" "app_instance" {
 
   tags = merge(
     local.common_tags,
-    { Name = "${var.app_name}-${var.app_env}-${count.index}" }
+    {
+      Name          = "${var.app_name}-${var.app_env}-${count.index}"
+      TsunamiNodeId = count.index + 1
+    }
   )
 }
 

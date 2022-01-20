@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2022-01-20
+* Terraform:
+  - Added `TsunamiNodeId` to AWS Instance Tags
+  - Added `inventory` to TF outputs
+* Update `server.json` to make use of `tsunami_node_id` as a test
+
 ## 2021-10-12
 * Updated terraform code to be 1.0 compliant
 
