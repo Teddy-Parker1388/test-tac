@@ -136,7 +136,7 @@ verification:
       qa: index=devops_nonprod_logs source="mostly-harmless-app-requests-qa" \[ERROR\]
       stage: index=devops_nonprod_logs source="mostly-harmless-app-requests-stage" \[ERROR\]
       perf: index=devops_nonprod_logs source="mostly-harmless-app-requests-perf" \[ERROR\]
-      prod: index=devops_nonprod_logs source="mostly-harmless-app-requests-prod" \[ERROR\]
+      prod: index=devops_prod_logs source="mostly-harmless-app-requests-prod" \[ERROR\]
 
 # Settings needed by the RFC process to help identify the application in SNOW.
 RFC:
