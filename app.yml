@@ -7,11 +7,11 @@ group: fprefect
 
 splunk:
   - log_path: "/opt/mostly-harmless/logs/request.log"
-    index: devops_prod_logs
+    index: devops_nonprod_logs
     sourcetype: generic_single_line
     source: mostly-harmless-app-requests-dev
   - log_path: "/var/log/nginx/access.log"
-    index: devops_prod_logs
+    index: devops_nonprod_logs
     sourcetype: generic_single_line
     source: mostly-harmless-nginx-access-dev
 

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2021-01-25
+* Update app.yml to redirect logs to the Splunk `devops_nonprod_logs` index.
+
 ## 2022-01-20
 * Terraform:
   - Added `TsunamiNodeId` to AWS Instance Tags

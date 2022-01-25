@@ -8,6 +8,54 @@
 # will **NOT HAVE ANY EFFECT**.
 ################################################################################
 
+deployment:
+  # Which deployment pipeline to use for the application.
+  # Since this is the reference application for In-Place deployments,
+  # the really only valid value is 'in-place'.
+  strategy: in-place
+
+# AWS Info
+# Each AppDev team gets two AWS accounts.
+# One for Non-production (dev, qa, stage, perf)
+# One for Production (prod)
+aws:
+  non_prod:
+    account_id: 901254650597
+    # base_ami will not be known until after the base AMIs have been created.
+    base_ami: ami-08b466de09d2ea098
+    vpc: vpc-05888f065bca4b7d1
+    subnets:
+      # AKA: app-tier
+      private:
+        - subnet-0102fdf161708d416
+        - subnet-003af1f817850673f
+        - subnet-01cf90f812f91a056
+        - subnet-025da1decd534cdab
+      # AKA: web-tier
+      public:
+        - subnet-04728a2924ff7865e
+        - subnet-08fcfdc02dd1609a0
+        - subnet-0a19dd1695495413a
+        - subnet-0182390929796ef9a
+  prod:
+    account_id: 438470166505
+    # base_ami will not be known until after the base AMIs have been created.
+    base_ami: ami-00ecf89b5bb1982b2
+    vpc: vpc-043bef4a5b31a6145
+    subnets:
+      # AKA: app-tier
+      private:
+        - subnet-0d6159acbc36d68af
+        - subnet-0795a95a47ac4f88f
+        - subnet-098377eb264445e78
+        - subnet-0f455d6cb10d6af7d
+      # AKA: web-tier
+      public:
+        - subnet-0e4df7cdb2e66b1db
+        - subnet-0b62c8ce1a09af229
+        - subnet-06318e1a946c514a6
+        - subnet-04b5952d88b854e12
+
 # Artifact Store and where to find your app's artifact.
 artifact:
   # Alias to a known Artifact Server
@@ -17,12 +65,12 @@ artifact:
   format: ZIP
   # Artifact Filter (name, pattern, groupId)
   # Artifactory:
-  #   - Path w/ wildcards: com/cengage/devops/tsunami-ref-app/**/*.zip
+  #   - Path w/ wildcards: com/cengage/devops/mostly-harmless/**/*.zip
   # Cengage | Nexus Maven:
-  #   - GroupId.Name: com.cengage.devops.tsunami-ref-app
+  #   - GroupId.Name: com.cengage.devops.mostly-harmless
   # Nexus NPM:
-  #   - NPM package name: tsunami-ref-app
-  filter: com/cengage/devops/tsunami-ref-app/**/*.zip
+  #   - NPM package name: mostly-harmless
+  filter: com/cengage/devops/mostly-harmless/**/*.zip
   # Source repo name for snapshots and releases
   sources:
     snapshots: cengage-snapshots
@@ -30,13 +78,8 @@ artifact:
 
 # A list of Harness Group IDs
 notifications:
-  - CAWGpfgDSeCXBnANG3hQZA
-  - iotz5oDETravIQk3-kwGxw
-
-auto_scaling_group:
-  min_instances: 1
-  max_instances: 2
-  desired_instances: 2
+  - DevOps
+  - Nobody
 
 verification:
   # Jenkins jobs that will run as part of the deployment process.
@@ -46,8 +89,8 @@ verification:
   # * parameters: A mapping of parameters that the job accepts.
   # * environments: The job will run when deployed to any of the envs in the list.
   jenkins:
-    - name: Smoke Tests
-      job_name: tsunami-ref-app/Smoke Tests
+    - name: Functional Tests
+      job_name: mostly-harmless/Functional Tests
       parameters:
         url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
         env: ${env.name}
@@ -57,52 +100,47 @@ verification:
         - stage
         - perf
         - prod
-    - name: Contract Tests
-      job_name: tsunami-ref-app/Contract Tests
+    - name: Load Tests
+      job_name: mostly-harmless/Load Tests
       parameters:
         url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
         env: ${env.name}
+        duration: 300
       environments:
+        - dev
         - qa
         - stage
-        - prod
-    - name: Performance Tests
-      job_name: tsunami-ref-app/Performance Tests
-      parameters:
-        url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
-        env: ${env.name}
-      environments:
         - perf
+        - prod
   # DynaTrace
   dynatrace:
     # List each environment for which you want to activate Deployment Verification.
-    deploy_verification:
-      - prod
+    # Set to empty list initially b/c we don't know the DT Service IDs until
+    # after the first deployment.
+    deploy_verification: []
     # Set the DynaTrace Service ID for each of your application's environments.
-    # These IDs can be found in DynaTrace.
-    services:
-      dev: SERVICE-E9BAE07D2971F155
-      qa: SERVICE-38142AB90A14715F
-      stage: SERVICE-A147C795226180AC
-      perf: SERVICE-D65BDE8E522F5800
-      prod: SERVICE-156452F3E3321BEF
+    # These IDs can be found in DynaTrace and will not be known until *AFTER*
+    # the application has been deployed via Harness
+    services: []
   # Splunk
   splunk:
     # List each environment for which you want to activate Deployment Verification.
     deploy_verification:
+      - dev
+      - qa
       - prod
     # Set a Splunk query to use per environment that will indicate error states
     # or anomalous behavior in your application.
     queries:
-      dev: index=devops_prod_logs source="tsunami-ref-app-requests-dev" \[ERROR\]
-      qa: index=devops_prod_logs source="tsunami-ref-app-requests-qa" \[ERROR\]
-      stage: index=devops_prod_logs source="tsunami-ref-app-requests-stage" \[ERROR\]
-      perf: index=devops_prod_logs source="tsunami-ref-app-requests-perf" \[ERROR\]
-      prod: index=devops_prod_logs source="tsunami-ref-app-requests-prod" \[ERROR\]
+      dev: index=devops_nonprod_logs source="mostly-harmless-app-requests-dev" \[ERROR\]
+      qa: index=devops_nonprod_logs source="mostly-harmless-app-requests-qa" \[ERROR\]
+      stage: index=devops_nonprod_logs source="mostly-harmless-app-requests-stage" \[ERROR\]
+      perf: index=devops_nonprod_logs source="mostly-harmless-app-requests-perf" \[ERROR\]
+      prod: index=devops_nonprod_logs source="mostly-harmless-app-requests-prod" \[ERROR\]
 
 # Settings needed by the RFC process to help identify the application in SNOW.
 RFC:
   # A Change Management team member can provide this value for the application.
-  - item: CD-DevOps
+  item: CD-DevOps
   # Valid values: Internal Application|External Application
-  - sub_category: Internal Application
+  sub_category: Internal Application
