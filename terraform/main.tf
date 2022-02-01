@@ -1,36 +1,36 @@
-provider "aws" {
-  region = var.region
-}
-
+// -----------------------------------------------------------------------------
+// See Also: shared-main.tf
+// -----------------------------------------------------------------------------
 terraform {
-  required_version = "~> 1.0"
-
-  required_providers {
-    aws = "3.56"
-  }
-
   backend "s3" {
     bucket         = "cengage-shared-terraform-backend"
-    key            = "901254650597/devops-non-prod/mostly-harmless/dev.tfstate"
     dynamodb_table = "terraform-lock"
-    role_arn       = "arn:aws:iam::084140270005:role/devops-non-prod"
     region         = "us-east-1"
     encrypt        = true
+    // TODO: 'key' **must** be updated to reflect account, app and environment
+    // => <account_id>/<account_name>/<application>/<env>.tfstate
+    key = "901254650597/devops-non-prod/mostly-harmless/dev.tfstate"
+    // TODO: 'role_arn' **must** be update to reflect non-prod / prod account
+    // => arn:aws:iam::084140270005:role/<account_name>
+    role_arn = "arn:aws:iam::084140270005:role/devops-non-prod"
   }
-}
-
-#selects the VPC for deployment
-data "aws_vpc" "selected" {
-  id = var.vpc_id
 }
 
 locals {
-  common_tags = {
-    Name        = var.app_name
-    Product     = var.app_product
-    App         = var.app_name
-    Environment = var.app_env
-  }
+  private_tier_ids = [for id in data.aws_subnet_ids.private.ids : id]
+}
+
+// -- Load Necessary Subnet Ids --
+// private/app tier subnets
+data "aws_subnet_ids" "private" {
+  vpc_id = var.vpc_id
+  tags   = { Name = "${var.subnet_prefix}-${local.env_type}-app-tier*" }
+}
+
+// public/web tier subnets
+data "aws_subnet_ids" "public" {
+  vpc_id = var.vpc_id
+  tags   = { Name = "${var.subnet_prefix}-${local.env_type}-web-tier*" }
 }
 
 data "aws_ami" "base_image" {
@@ -51,7 +51,7 @@ module "sec_grp_instance" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.2.0"
   name        = "${var.app_name}-${var.app_env}-instance"
   description = "${var.app_name}-${var.app_env} instance security group"
-  vpc_id      = data.aws_vpc.selected.id
+  vpc_id      = var.vpc_id
 
   tags = local.common_tags
 
@@ -77,8 +77,8 @@ resource "aws_instance" "app_instance" {
   instance_type = var.instance_type
 
   subnet_id = element(
-    var.private_subnets,
-    count.index % length(var.private_subnets)
+    local.private_tier_ids,
+    count.index % length(local.private_tier_ids)
   )
 
   key_name               = aws_key_pair.ssh_key_pair.key_name
@@ -120,7 +120,7 @@ module "sec_grp_alb_public" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.2.0"
   name        = "${var.app_name}-${var.app_env}-alb-public"
   description = "${var.app_name}-${var.app_env} Public ALB security group"
-  vpc_id      = data.aws_vpc.selected.id
+  vpc_id      = var.vpc_id
 
   tags                     = local.common_tags
   ingress_with_cidr_blocks = var.ingress_alb_public
@@ -132,7 +132,7 @@ module "sec_grp_alb_private" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.2.0"
   name        = "${var.app_name}-${var.app_env}-alb-private"
   description = "${var.app_name}-${var.app_env} Private ALB security group"
-  vpc_id      = data.aws_vpc.selected.id
+  vpc_id      = var.vpc_id
 
   tags                     = local.common_tags
   ingress_with_cidr_blocks = var.ingress_alb_private
@@ -146,8 +146,8 @@ module "app_lb_private" {
   load_balancer_type = "application"
   name               = "${var.app_name}-${var.app_env}-private"
   internal           = true
-  vpc_id             = data.aws_vpc.selected.id
-  subnets            = var.private_subnets
+  vpc_id             = var.vpc_id
+  subnets            = data.aws_subnet_ids.private.ids
   security_groups    = [module.sec_grp_alb_private.this_security_group_id]
 
   tags    = local.common_tags
@@ -224,8 +224,8 @@ module "app_lb_public" {
   load_balancer_type = "application"
   name               = "${var.app_name}-${var.app_env}-public"
   internal           = false
-  vpc_id             = data.aws_vpc.selected.id
-  subnets            = var.public_subnets
+  vpc_id             = var.vpc_id
+  subnets            = data.aws_subnet_ids.public.ids
   security_groups    = [module.sec_grp_alb_public.this_security_group_id]
 
   tags    = local.common_tags

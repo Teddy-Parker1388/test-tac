@@ -1,6 +1,5 @@
 tfChecker([
-    app_env: "dev",
-    vpc_id: "vpc-05888f065bca4b7d1"
+    app_env: "DEV",
     ],
     [:],
     "./terraform"
