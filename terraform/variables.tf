@@ -1,56 +1,6 @@
-variable "region" {
-  default = "us-east-1"
-}
-
-variable "app_name" {
-  description = "Application Name"
-  type        = string
-  default     = "mostly-harmless"
-}
-
-variable "app_env" {
-  description = "Application Deployment Environment"
-  type        = string
-}
-
-variable "app_product" {
-  description = "Application Product Group"
-  type        = string
-  default     = "DevOps"
-}
-
 // -----------------------------------------------------------------------------
-// ENVIRONMENT SPECIFIC CHANGES REQUIRED BELOW
+// See Also: shared-variables.tf
 // -----------------------------------------------------------------------------
-// TODO: VPC_ID: Must change value to reflect VPC for environment.
-variable "vpc_id" {
-  default     = "vpc-05888f065bca4b7d1"
-  description = "The deployment VPC on AWS."
-}
-
-// TODO: SUBNETS: Must change values to reflect the above VPC's *APP* tier subnets.
-variable "private_subnets" {
-  description = "A list of subnets to associate with the load balancer."
-  type        = list(string)
-  default = [
-    "subnet-0102fdf161708d416",
-    "subnet-003af1f817850673f",
-    "subnet-01cf90f812f91a056",
-    "subnet-025da1decd534cdab"
-  ]
-}
-
-// TODO: SUBNETS: Must change values to reflect the above VPC's *WEB* tier subnets.
-variable "public_subnets" {
-  description = "A list of subnets to associate with the load balancer."
-  type        = list(string)
-  default = [
-    "subnet-04728a2924ff7865e",
-    "subnet-08fcfdc02dd1609a0",
-    "subnet-0a19dd1695495413a",
-    "subnet-0182390929796ef9a"
-  ]
-}
 
 // TODO: INSTANCE_TYPE: Must change value to reflect the desired EC2 size for environment.
 variable "instance_type" {

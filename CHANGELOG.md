@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## 2021-01-25
+## 2022-02-01
+* Terraform code updates:
+    - removed the need for hard-coded subnet ids.
+    - removed the `data` entry for `aws_vpc.selected`...it was extraneous.
+    - DRY'd up the code a bit by adding the `shared/*.tf` files.
+
+## 2022-01-25
 * Update app.yml to redirect logs to the Splunk `devops_nonprod_logs` index.
 
 ## 2022-01-20

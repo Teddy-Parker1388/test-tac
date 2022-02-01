@@ -1,21 +1,18 @@
-provider "aws" {
-  region = var.region
-}
-
+// -----------------------------------------------------------------------------
+// See Also: shared-main.tf
+// -----------------------------------------------------------------------------
 terraform {
-  required_version = "~> 1.0"
-
-  required_providers {
-    aws = "3.56"
-  }
-
   backend "s3" {
     bucket         = "cengage-shared-terraform-backend"
-    key            = "901254650597/devops-non-prod/mostly-harmless/deps/dev.tfstate"
     dynamodb_table = "terraform-lock"
-    role_arn       = "arn:aws:iam::084140270005:role/devops-non-prod"
     region         = "us-east-1"
     encrypt        = true
+    // TODO: 'key' **must** be updated to reflect account, app and environment
+    // => <account_id>/<account_name>/<application>/deps/<env>.tfstate
+    key = "901254650597/devops-non-prod/mostly-harmless/deps/dev.tfstate"
+    // TODO: 'role_arn' **must** be update to reflect non-prod / prod account
+    // => arn:aws:iam::084140270005:role/<account_name>
+    role_arn = "arn:aws:iam::084140270005:role/devops-non-prod"
   }
 }
 
