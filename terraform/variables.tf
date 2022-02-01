@@ -8,6 +8,7 @@ variable "instance_type" {
   default = "t3.medium"
 }
 
+// TODO: INSTANCE_COUNT: Must change value to reflect the desired EC2 instance count for environment.
 variable "instance_count" {
   type    = number
   default = 4
