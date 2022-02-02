@@ -20,6 +20,10 @@ locals {
   private_tier_ids = [for id in data.aws_subnet_ids.private.ids : id]
 }
 
+data "aws_acm_certificate" "cengage_info" {
+  domain = "*.cengage.info"
+}
+
 // -- Load Necessary Subnet Ids --
 // private/app tier subnets
 data "aws_subnet_ids" "private" {
@@ -195,15 +199,33 @@ module "app_lb_private" {
   http_tcp_listeners = [
     # Forward action is default, either when defined or undefined
     {
-      port               = 80
-      protocol           = "HTTP"
-      target_group_index = 0
+      port        = 80
+      protocol    = "HTTP"
+      action_type = "redirect"
+      redirect = {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
     },
     {
       port               = 8080
       protocol           = "HTTP"
       target_group_index = 1
+    }
+  ]
+
+  https_listeners = [
+    {
+      port               = 443
+      certificate_arn    = data.aws_acm_certificate.cengage_info.arn
+      target_group_index = 0
     },
+    {
+      port               = 8443
+      certificate_arn    = data.aws_acm_certificate.cengage_info.arn
+      target_group_index = 1
+    }
   ]
 
   target_group_tags = local.common_tags
@@ -255,8 +277,21 @@ module "app_lb_public" {
   http_tcp_listeners = [
     # Forward action is default, either when defined or undefined
     {
-      port               = 80
-      protocol           = "HTTP"
+      port        = 80
+      protocol    = "HTTP"
+      action_type = "redirect"
+      redirect = {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
+    }
+  ]
+
+  https_listeners = [
+    {
+      port               = 443
+      certificate_arn    = data.aws_acm_certificate.cengage_info.arn
       target_group_index = 0
     }
   ]

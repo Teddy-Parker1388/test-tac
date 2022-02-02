@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2022-02-02
+* Added HTTPs support in terraform code.
+  
 ## 2022-02-01
 * Terraform code updates:
     - removed the need for hard-coded subnet ids.

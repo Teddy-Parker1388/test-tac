@@ -28,6 +28,10 @@ variable "ingress_alb_public" {
     {
       rule        = "http-80-tcp"
       cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      rule        = "https-443-tcp"
+      cidr_blocks = "0.0.0.0/0"
     }
   ]
 }
@@ -41,7 +45,15 @@ variable "ingress_alb_private" {
       cidr_blocks = "10.0.0.0/8"
     },
     {
+      rule        = "https-443-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
       rule        = "http-8080-tcp"
+      cidr_blocks = "10.0.0.0/8"
+    },
+    {
+      rule        = "https-8443-tcp"
       cidr_blocks = "10.0.0.0/8"
     }
   ]
