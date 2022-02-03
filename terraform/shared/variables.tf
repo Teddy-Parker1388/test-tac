@@ -28,16 +28,6 @@ variable "app_product" {
   default     = "DevOps"
 }
 
-// TODO: 'subnet_prefix' should match the prefix of each subnet as seen in the
-//       AWS console.
-//       Format: <prefix>-<env_type>-<tier>-<region-az>
-//       Example: devops-non-prod-app-tier-us-east-1
-//       ...so prefix in this case is 'devops'...
-variable "subnet_prefix" {
-  default     = "devops"
-  description = "The prefix of each subnet name"
-}
-
 // TODO: VPC_ID: Must change value to reflect VPC for environment.
 variable "vpc_id" {
   default     = "vpc-05888f065bca4b7d1"

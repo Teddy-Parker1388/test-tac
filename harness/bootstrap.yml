@@ -21,40 +21,10 @@ deployment:
 aws:
   non_prod:
     account_id: 901254650597
-    # base_ami will not be known until after the base AMIs have been created.
-    base_ami: ami-08b466de09d2ea098
     vpc: vpc-05888f065bca4b7d1
-    subnets:
-      # AKA: app-tier
-      private:
-        - subnet-0102fdf161708d416
-        - subnet-003af1f817850673f
-        - subnet-01cf90f812f91a056
-        - subnet-025da1decd534cdab
-      # AKA: web-tier
-      public:
-        - subnet-04728a2924ff7865e
-        - subnet-08fcfdc02dd1609a0
-        - subnet-0a19dd1695495413a
-        - subnet-0182390929796ef9a
   prod:
     account_id: 438470166505
-    # base_ami will not be known until after the base AMIs have been created.
-    base_ami: ami-00ecf89b5bb1982b2
     vpc: vpc-043bef4a5b31a6145
-    subnets:
-      # AKA: app-tier
-      private:
-        - subnet-0d6159acbc36d68af
-        - subnet-0795a95a47ac4f88f
-        - subnet-098377eb264445e78
-        - subnet-0f455d6cb10d6af7d
-      # AKA: web-tier
-      public:
-        - subnet-0e4df7cdb2e66b1db
-        - subnet-0b62c8ce1a09af229
-        - subnet-06318e1a946c514a6
-        - subnet-04b5952d88b854e12
 
 # Artifact Store and where to find your app's artifact.
 artifact:

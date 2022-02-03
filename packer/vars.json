@@ -1,9 +1,6 @@
 {
     "app": "mostly-harmless",
     "product": "DevOps",
-    "aws_vpc_id": "vpc-05888f065bca4b7d1",
-    "aws_subnet_id": "subnet-0102fdf161708d416",
-    "aws_base_ami_id": "ami-08b466de09d2ea098",
     "docker": [
         "ENTRYPOINT [\"nginx\", \"-g\", \"daemon off;\"]"
     ]

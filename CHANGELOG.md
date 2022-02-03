@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2022-02-03
+* Removed unneeded vars in `packer/var.json`
+* Updated `harness/bootstrap.yml` to remove unneeded `aws` info
+* Removed the need for the recently added `subnet_prefix` TF var
+
 ## 2022-02-02
 * Added HTTPs support in terraform code.
   

@@ -28,13 +28,13 @@ data "aws_acm_certificate" "cengage_info" {
 // private/app tier subnets
 data "aws_subnet_ids" "private" {
   vpc_id = var.vpc_id
-  tags   = { Name = "${var.subnet_prefix}-${local.env_type}-app-tier*" }
+  tags   = { Name = "*-${local.env_type}-app-tier*" }
 }
 
 // public/web tier subnets
 data "aws_subnet_ids" "public" {
   vpc_id = var.vpc_id
-  tags   = { Name = "${var.subnet_prefix}-${local.env_type}-web-tier*" }
+  tags   = { Name = "*-${local.env_type}-web-tier*" }
 }
 
 data "aws_ami" "base_image" {
