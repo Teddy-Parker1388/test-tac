@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2022-03-03
+* Updated `config.yml` to take advantage of the new user, group & path defaults
+
 ## 2022-02-03
 * Removed unneeded vars in `packer/var.json`
 * Updated `harness/bootstrap.yml` to remove unneeded `aws` info
