@@ -1,30 +1,19 @@
 ---
-################################################################################
-# NOTE:
-# The information in this file is **only** used for the initial set up of a
-# Tsunami Application in Harness.
+# ------------------------------------------------------------------------------
+# ==> Harness Application <==
+# * This section to be completed with coordination between the DevOps & AppDev Teams *
+# ------------------------------------------------------------------------------
+# The information in this file is **ONLY** used for the initial set up of your
+# application in Harness.
 #
 # Changing any of these values after your application already exists in Harness
 # will **NOT HAVE ANY EFFECT**.
-################################################################################
+# ------------------------------------------------------------------------------
 
-deployment:
-  # Which deployment pipeline to use for the application.
-  # Since this is the reference application for In-Place deployments,
-  # the really only valid value is 'in-place'.
-  strategy: in-place
-
-# AWS Info
-# Each AppDev team gets two AWS accounts.
-# One for Non-production (dev, qa, stage, perf)
-# One for Production (prod)
-aws:
-  non_prod:
-    account_id: 901254650597
-    vpc: vpc-05888f065bca4b7d1
-  prod:
-    account_id: 438470166505
-    vpc: vpc-043bef4a5b31a6145
+# Which deployment pipeline to use for the application.
+# Since this is the reference application for In-Place deployments,
+# the really only valid value is 'in-place'.
+deployment_type: in-place
 
 # Artifact Store and where to find your app's artifact.
 artifact:
@@ -82,17 +71,6 @@ verification:
         - stage
         - perf
         - prod
-  # DynaTrace
-  dynatrace:
-    # List each environment for which you want to activate Deployment Verification.
-    # Set to empty list initially b/c we don't know the DT Service IDs until
-    # after the first deployment.
-    deploy_verification: []
-    # Set the DynaTrace Service ID for each of your application's environments.
-    # These IDs can be found in DynaTrace and will not be known until *AFTER*
-    # the application has been deployed via Harness
-    services: []
-  # Splunk
   splunk:
     # List each environment for which you want to activate Deployment Verification.
     deploy_verification:
@@ -109,7 +87,7 @@ verification:
       prod: index=devops_prod_logs source="mostly-harmless-app-requests-prod" \[ERROR\]
 
 # Settings needed by the RFC process to help identify the application in SNOW.
-RFC:
+change_management:
   # A Change Management team member can provide this value for the application.
   item: CD-DevOps
   # Valid values: Internal Application|External Application

@@ -1,0 +1,60 @@
+---
+# ------------------------------------------------------------------------------
+# INFRASTRUCTURE
+# ------------------------------------------------------------------------------
+# Changes made to this file directly effect the main Terraform code in the
+# `terraform` & `terraform/shared` directories.
+#
+# Changes DO NOT effect Terraform code in the `terraform/dependencies` directory
+# since that Terraform code is application specific.
+#
+# **IMPORTANT**  **IMPORTANT** **IMPORTANT** **IMPORTANT** **IMPORTANT**
+# In order to apply any changes made to this file, you **must** run:
+# bash> tsunami app update
+#
+# The `tsunami app update` command may also change files outside of the `terraform`
+# directory.
+#
+# Also note that information in the other TAC YAML files may have effect on the
+# Terraform code.
+#
+# Any changes made by the `tsunami app update` command are made locally to this
+# TAC repo. As such, you will be able to review those changes before committing
+# them back to BitBucket.
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# ==> AWS Account Info <==
+# * This section to be completed by a DevOps Engineer *
+# ------------------------------------------------------------------------------
+# Each AppDev team gets two AWS accounts.
+# One for Non-production (dev, qa, stage, perf)
+# One for Production (prod)
+# ------------------------------------------------------------------------------
+aws_accounts:
+  non_prod:
+    id: 901254650597
+    name: devops-non-prod
+    vpc_id: vpc-05888f065bca4b7d1
+  prod:
+    id: 438470166505
+    name: devops-prod
+    vpc_id: vpc-043bef4a5b31a6145
+
+# ------------------------------------------------------------------------------
+# ==> Infrastructure Specs <==
+# * This section to be completed by AppDev Team *
+# ------------------------------------------------------------------------------
+# `product_group` is mainly used for AWS tagging purposes
+product_group: DevOps
+health_check:
+  port: 4242
+  path: "/" # Optional. Default: '/'
+  type: HTTP # Optional. Default: 'HTTP'
+instance:
+  # App port - What port does your application listen for requests on
+  port: 4242
+  type:
+    default: t3.micro
+    stage: t3.small
+    prod: t3.medium
