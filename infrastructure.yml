@@ -50,7 +50,7 @@ product_group: DevOps
 health_check:
   port: 4242
   path: "/" # Optional. Default: '/'
-  type: HTTP # Optional. Default: 'HTTP'
+  protocol: HTTP # Optional. Default: 'HTTP'
 instance:
   # App port - What port does your application listen for requests on
   port: 4242

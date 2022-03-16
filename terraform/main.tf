@@ -1,21 +1,6 @@
 // -----------------------------------------------------------------------------
 // See Also: shared-main.tf
 // -----------------------------------------------------------------------------
-terraform {
-  backend "s3" {
-    bucket         = "cengage-shared-terraform-backend"
-    dynamodb_table = "terraform-lock"
-    region         = "us-east-1"
-    encrypt        = true
-    // TODO: 'key' **must** be updated to reflect account, app and environment
-    // => <account_id>/<account_name>/<application>/<env>.tfstate
-    key = "901254650597/devops-non-prod/mostly-harmless/dev.tfstate"
-    // TODO: 'role_arn' **must** be update to reflect non-prod / prod account
-    // => arn:aws:iam::084140270005:role/<account_name>
-    role_arn = "arn:aws:iam::084140270005:role/devops-non-prod"
-  }
-}
-
 locals {
   private_tier_ids = [for id in data.aws_subnet_ids.private.ids : id]
 }
@@ -167,12 +152,12 @@ module "app_lb_private" {
       health_check = {
         enabled             = true
         interval            = 30
-        path                = "/"
+        path                = var.app_healthcheck_path
         port                = var.app_healthcheck_port
         healthy_threshold   = 3
         unhealthy_threshold = 3
         timeout             = 6
-        protocol            = "HTTP"
+        protocol            = var.app_healthcheck_protocol
         matcher             = "200"
       }
     },
@@ -185,12 +170,12 @@ module "app_lb_private" {
       health_check = {
         enabled             = true
         interval            = 30
-        path                = "/"
+        path                = var.app_healthcheck_path
         port                = var.app_healthcheck_port
         healthy_threshold   = 3
         unhealthy_threshold = 3
         timeout             = 6
-        protocol            = "HTTP"
+        protocol            = var.app_healthcheck_protocol
         matcher             = "200"
       }
     }
@@ -263,12 +248,12 @@ module "app_lb_public" {
       health_check = {
         enabled             = true
         interval            = 30
-        path                = "/"
+        path                = var.app_healthcheck_path
         port                = var.app_healthcheck_port
         healthy_threshold   = 3
         unhealthy_threshold = 3
         timeout             = 6
-        protocol            = "HTTP"
+        protocol            = var.app_healthcheck_protocol
         matcher             = "200"
       }
     }

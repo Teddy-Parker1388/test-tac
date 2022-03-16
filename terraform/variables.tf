@@ -71,6 +71,18 @@ variable "app_healthcheck_port" {
   default     = 8080
 }
 
+variable "app_healthcheck_path" {
+  description = "The path to use for application health checks"
+  type        = string
+  default     = "/"
+}
+
+variable "app_healthcheck_protocol" {
+  description = "The protocol to use for application health checks"
+  type        = string
+  default     = "HTTP"
+}
+
 variable "ingress_instance" {
   description = "Instance Ingress"
   type        = list(map(string))
