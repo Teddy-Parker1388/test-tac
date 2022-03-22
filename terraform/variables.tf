@@ -1,19 +1,21 @@
-// -----------------------------------------------------------------------------
-// See Also: shared-variables.tf
-// -----------------------------------------------------------------------------
-
-// TODO: INSTANCE_TYPE: Must change value to reflect the desired EC2 size for environment.
+################################################################################
+# => The contents of this file have been automatically updated by Tsunami <=
+# You **can** manually edit this file. 
+#
+# However, be aware that the next time Tsunami updates this file you will loose
+# some formatting and all comments.
+#
+# Running `terraform fmt` will correct formatting issues.
+################################################################################
 variable "instance_type" {
   type    = string
   default = "t3.medium"
 }
 
-// TODO: INSTANCE_COUNT: Must change value to reflect the desired EC2 instance count for environment.
 variable "instance_count" {
   type    = number
-  default = 4
+  default = 2
 }
-// -----------------------------------------------------------------------------
 
 variable "add_to_logicmonitor" {
   type        = string
@@ -88,13 +90,6 @@ variable "ingress_instance" {
   type        = list(map(string))
   default = [
     {
-      // **Must** match `app_port` variable above
-      // Can't use vars in a variables file :(
-      // ----------------------------------------
-      // Use this 'rule' for Standard Ports (80, 8080, 443, 8443)
-      // rule        = "http-PORT-tcp"
-      // ----------------------------------------
-      // Otherwise, must define specific from/to/protocol
       description = "Application Port"
       from_port   = 8080
       to_port     = 8080
@@ -111,13 +106,6 @@ variable "ingress_instance" {
     },
     {
       rule        = "all-icmp"
-      cidr_blocks = "10.0.0.0/8"
-    },
-    {
-      from_port   = 161
-      to_port     = 162
-      protocol    = "udp"
-      description = "LogicMonitor - SNMP"
       cidr_blocks = "10.0.0.0/8"
     },
     {
@@ -140,3 +128,4 @@ variable "egress_all" {
     }
   ]
 }
+

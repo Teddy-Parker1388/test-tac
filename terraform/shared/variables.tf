@@ -1,12 +1,12 @@
-// -----------------------------------------------------------------------------
-// ***** NOTE *****
-// All variables in this file are shared by the "main" terraform code and the 
-// "dependencies" terraform code.
-// 
-// Don't add any variables to this file that are specific to one or the other.
-// Instead add the specific variables to the 'variables.tf' file for the 
-// appropriate terraform code set.
-// -----------------------------------------------------------------------------
+################################################################################
+# => The contents of this file have been automatically updated by Tsunami <=
+# You **can** manually edit this file. 
+#
+# However, be aware that the next time Tsunami updates this file you will loose
+# some formatting and all comments.
+#
+# Running `terraform fmt` will correct formatting issues.
+################################################################################
 variable "region" {
   default = "us-east-1"
 }
@@ -28,8 +28,8 @@ variable "app_product" {
   default     = "DevOps"
 }
 
-// TODO: VPC_ID: Must change value to reflect VPC for environment.
 variable "vpc_id" {
   default     = "vpc-05888f065bca4b7d1"
   description = "The deployment VPC on AWS."
 }
+
