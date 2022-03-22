@@ -54,10 +54,5 @@ health_check:
 instance:
   # App port - What port does your application listen for requests on
   port: 4242
-  type:
-    default: t3.micro
-    stage: t3.small
-    prod: t3.medium
-  count:
-    default: 2
-    prod: 4
+  type: t3.medium
+  count: 2
