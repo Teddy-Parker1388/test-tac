@@ -53,6 +53,6 @@ health_check:
   protocol: HTTP # Optional. Default: 'HTTP'
 instance:
   # App port - What port does your application listen for requests on
-  port: 4242
+  port: 8080
   type: t3.medium
   count: 2

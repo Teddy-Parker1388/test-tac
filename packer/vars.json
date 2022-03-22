@@ -1,7 +1,7 @@
 {
-    "app": "mostly-harmless",
-    "product": "DevOps",
-    "docker": [
-        "ENTRYPOINT [\"nginx\", \"-g\", \"daemon off;\"]"
-    ]
+  "app": "mostly-harmless",
+  "docker": [
+    "ENTRYPOINT [\"nginx\", \"-g\", \"daemon off;\"]"
+  ],
+  "product": "DevOps"
 }
