@@ -48,7 +48,7 @@ aws_accounts:
 # `product_group` is mainly used for AWS tagging purposes
 product_group: DevOps
 health_check:
-  port: 4242
+  port: 8080
   path: "/" # Optional. Default: '/'
   protocol: HTTP # Optional. Default: 'HTTP'
 instance:
