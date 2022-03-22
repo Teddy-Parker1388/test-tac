@@ -88,7 +88,17 @@ variable "ingress_instance" {
   type        = list(map(string))
   default = [
     {
-      rule        = "http-8080-tcp",
+      // **Must** match `app_port` variable above
+      // Can't use vars in a variables file :(
+      // ----------------------------------------
+      // Use this 'rule' for Standard Ports (80, 8080, 443, 8443)
+      // rule        = "http-PORT-tcp"
+      // ----------------------------------------
+      // Otherwise, must define specific from/to/protocol
+      description = "Application Port"
+      from_port   = 8080
+      to_port     = 8080
+      protocol    = "tcp"
       cidr_blocks = "10.0.0.0/8"
     },
     {
@@ -101,6 +111,20 @@ variable "ingress_instance" {
     },
     {
       rule        = "all-icmp"
+      cidr_blocks = "10.0.0.0/8"
+    },
+    {
+      from_port   = 161
+      to_port     = 162
+      protocol    = "udp"
+      description = "LogicMonitor - SNMP"
+      cidr_blocks = "10.0.0.0/8"
+    },
+    {
+      from_port   = 19999
+      to_port     = 19999
+      protocol    = "tcp"
+      description = "NetData"
       cidr_blocks = "10.0.0.0/8"
     }
   ]

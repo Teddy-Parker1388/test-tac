@@ -58,3 +58,6 @@ instance:
     default: t3.micro
     stage: t3.small
     prod: t3.medium
+  count:
+    default: 2
+    prod: 4
