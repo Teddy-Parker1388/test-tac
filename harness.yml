@@ -15,10 +15,17 @@
 # the really only valid value is 'in-place'.
 deployment_type: in-place
 
+# A list of Harness Group IDs
+notifications:
+  - DevOps
+
 # Artifact Store and where to find your app's artifact.
 artifact:
   # Alias to a known Artifact Server
-  # artifactory_cengage_maven | nexus_cengage_maven | nexus_mindtap_maven, nexus_mindtap_npm
+  # artifactory_cengage_maven | nexus_cengage_maven
+  # nexus_mindtap_maven       | nexus_mindtap_npm
+  # no_artifact_required
+  # If set to `no_artifact_required`, the rest of the values are unnecessary
   server: artifactory_cengage_maven
   # Artifact packaging format: ZIP | TAR | JAR | WAR, etc.
   format: ZIP
@@ -34,11 +41,6 @@ artifact:
   sources:
     snapshots: cengage-snapshots
     releases: cengage-releases
-
-# A list of Harness Group IDs
-notifications:
-  - DevOps
-  - Nobody
 
 verification:
   # Jenkins jobs that will run as part of the deployment process.
@@ -71,14 +73,28 @@ verification:
         - stage
         - perf
         - prod
+  # --------------------------------------------------------------------------
+  # Splunk - Deployment verification by Splunk log analysis
+  # --------------------------------------------------------------------------
+  # The Splunk analysis will run in parallel with the **LAST** Jenkins job
+  # listed above.
+  # IF you don't have any traffic going to your site during the deployment
+  # verification stage then you don't need to activate the Splunk analysis
+  # --------------------------------------------------------------------------
   splunk:
-    # List each environment for which you want to activate Deployment Verification.
+    # List each environment for which you want to activate Splunk analysis.
+    # In general, this list should match the 'environments' list from the LAST
+    # Jenkins job listed above.
+    # To disable Splunk analysis set this value to an empty list: '[]'
+    # E.g. `deploy_verification: []`
     deploy_verification:
       - dev
       - qa
       - prod
     # Set a Splunk query to use per environment that will indicate error states
     # or anomalous behavior in your application.
+    # If you have disable Splunk analysis, you can set this value to an empty list: '[]'
+    # E.g. 'queries: []'
     queries:
       dev: index=devops_nonprod_logs source="mostly-harmless-app-requests-dev" \[ERROR\]
       qa: index=devops_nonprod_logs source="mostly-harmless-app-requests-qa" \[ERROR\]
@@ -89,6 +105,8 @@ verification:
 # Settings needed by the RFC process to help identify the application in SNOW.
 change_management:
   # A Change Management team member can provide this value for the application.
+  # An 'item' for your app can be requested in the '#onboarding-harness-snow-apps'
+  # Slack channel.
   item: CD-DevOps
   # Valid values: Internal Application|External Application
   sub_category: Internal Application

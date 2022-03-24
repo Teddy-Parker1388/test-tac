@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2022-03-24
+* Updated the various README.md files and comments in YML files to be similar to
+  tsunami-ref-app and to be useful for documentation.  
+
 ## 2022-03-03
 * Updated `config.yml` to take advantage of the new user, group & path defaults
 

@@ -2,18 +2,19 @@
 # ------------------------------------------------------------------------------
 # INFRASTRUCTURE
 # ------------------------------------------------------------------------------
-# Changes made to this file directly effect the main Terraform code in the
+# Changes made to this file directly effect the Terraform code in the
 # `terraform` & `terraform/shared` directories.
 #
-# Changes DO NOT effect Terraform code in the `terraform/dependencies` directory
-# since that Terraform code is application specific.
+# With the exception of `terraform/dependencies/backend.tf`, changes DO NOT
+# effect Terraform code in the `terraform/dependencies` directory since that
+# Terraform code is application specific.
 #
 # **IMPORTANT**  **IMPORTANT** **IMPORTANT** **IMPORTANT** **IMPORTANT**
 # In order to apply any changes made to this file, you **must** run:
 # bash> tsunami app update
 #
-# The `tsunami app update` command may also change files outside of the `terraform`
-# directory.
+# The `tsunami app update` command also changes files outside of the
+# `terraform` directory.
 #
 # Also note that information in the other TAC YAML files may have effect on the
 # Terraform code.

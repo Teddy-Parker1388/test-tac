@@ -1,11 +1,67 @@
 ---
+# A list of groups to create or ensure that exists on the system.
 groups:
   - fprefect
 
+# A list of users to create or ensure that exists on the system.
+# Format: user:primary_group,other_group1,other_group2
+#         'user' and 'primary_group' are **required**
 users:
   - fprefect:fprefect
 
+# List of SSL Certificates that need to be installed on the image.
+# Certs are installed to /etc/pki/tls
+# ssl_certificates:
+# - star.cengage.info
+
+# Various setting related to monitoring
 monitoring:
-  enable_snmp: no
+  # Install and Enable SNMPd.
+  # Required if your instances need to be monitored by LogicMonitor.
+  # SNMP is not installed by default
+  # To enable SNMP set this value to 'yes|true'
+  # Values: 'yes|no|true|false'
+  enable_snmp: yes
+
+  # Install and Enable NetData.
+  # NetData is not installed by default
+  # To enable NetData set this value to 'yes|true'
+  # Values: 'yes|no|true|false'
   enable_netdata: yes
-  enable_dynatrace: yes
+
+  # Install and Enable Dynatrace
+  # DT is installed by default.
+  # To disable DT set this value to `no|false`
+  # Values: 'yes|no|true|false'
+  # enable_dynatrace: no
+
+  # Additional installation options for Dynatrace
+  # This section is optional.
+  dynatrace:
+    # Configure for Infrastructure Only monitoring
+    # Default: false
+    infra_only_mode: false
+#
+# Add additional storage devices to image
+# **ONLY** available for AWS AMIs
+# See: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html
+#
+# All fields are required.
+# devices:
+#   # Creates a 10GB volume on /dev/xvdb mounted to /opt
+#   - # Source block device
+#     ebs_device: /dev/sdb
+#     # Volume type. "gpX" - General Purpose
+#     volume_type: "gp3"
+#     # Size in GBs
+#     volume_size: 10
+#     # Desired device throughput
+#     throughput: 400
+#     # Input/Output ops/second. Only use for `io1` and `io2` types.
+#     iops: 3500
+#     # delete the volume on instance termination?
+#     delete_on_termination: true
+#     # Device name on the instance
+#     device_name: /dev/xvdb
+#     # Where to mount the `device_name`
+#     mount_path: /opt
