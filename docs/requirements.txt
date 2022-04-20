@@ -1,0 +1,5 @@
+myst-parser~=0.17.0
+sphinx_rtd_theme==1.0.0
+sphinx~=4.5
+yaml2rst~=0.3
+sphinxcontrib-confluencebuilder~=1.8
