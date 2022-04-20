@@ -1,45 +1,62 @@
 ---
-# Application's runtime platform
+# PLATFORM - Runtime Platforms
+# ============================
+# Used to set the runtime platform for the application. Platform in this sense
+# refers to the technology stack that the application needs to run, e.g. Java,
+# NodeJS, etc.
 #
-# ------------------------------------------------------------------------------
-# --- NodeJS version to install ---
-# ------------------------------------------------------------------------------
-# Can specify as:
-#   vLTS i.e. v10, v12, v14
-#     or
-#   vM.N.P i.e. v10.23.1, v12.20.1, v14.15.4
-# ONLY LTS versions are supported.
-# ONLY LTS 10, 12, 14 are supported.
+# You can specify zero or more of the following:
+
+# NodeJS
+# ------
+# The version can be specified in two different ways:
+#
+# 1. vLTS - Install the latest version for the specified LTS version.
+#    Ex: v10 | v12 | v14
+# 2. vM.N.P - Install the specific version down to the patch level.
+#    Ex: v10.23.1 | v12.20.1 | v14.15.4
+#
+# .. CAUTION::
+#   Tsunami **does not** support non-LTS versions.
+#
+#   Supported LTS Versions: 10, 12, 14
+#
 nodejs: v14.15.4
 #
-# ------------------------------------------------------------------------------
-# --- Java version to install ---
-# ------------------------------------------------------------------------------
-# Format: DISTRO-VERSION
-#     - DISTRO: corretto | openjdk | zulu
-#     - VERSION: Major version number like 1.8 or 8 or 11 or 13
-# Ex: corretto-1.8.0 | corretto-11 | openjdk-11 | zulu-13
+# Java
+# ----
+# The version is specified in this format: ``DISTRO``-``VERSION``
 #
-# Supported VERSIONs:
-# * corretto: 1.8.0 | 11
-# * openjdk: 1.8.0 | 11
-# * zulu: 8 | 11 | 13 | 15
-# java: zulu-11
+# - DISTRO: corretto | openjdk | zulu
+# - VERSION: 1.8 or 8 or 11 or 13, etc
+# - Examples: corretto-1.8.0 | corretto-11 | openjdk-11 | zulu-13
 #
-# ------------------------------------------------------------------------------
-# --- Tomcat version to install ---
-# ------------------------------------------------------------------------------
-# vMAJOR | vM.N.P
-# Only specific versions are supported.
-# See: https://artifactory.cengage.info/artifactory/third-party-generic/tomcat/
-# EX: v7 | v7.0.108
-# tomcat: v7
+# .. HINT::
+#   Versions Available by DISTRO:
 #
-# ------------------------------------------------------------------------------
-# --- NGinx version to install ---
-# ------------------------------------------------------------------------------
-# Can specify as: latest | vM.N.P
-# Version specified must be supported as a native system package for the OS
-# you are using.
+#   * corretto: 1.8.0 | 11 | 17
+#   * openjdk: 1.8.0 | 11
+#   * zulu: 8 | 11 | 13 | 15 | 17
+#
+## java: zulu-11
+
+# Apache Tomcat
+# -------------
+# The version is specified as either: vMAJOR | vM.N.P
+#
+# .. HINT::
+#   See https://artifactory.cengage.info/artifactory/third-party-generic/tomcat/
+#   for a list of supported versions.
+#
+# Examples: v7 | v7.0.108
+## tomcat: v7
+
+# NGinx
+# -----
+# The version can be specified as: latest | vM.N.P
+#
+# .. IMPORTANT::
+#   The version specified must be supported as a native system package for the
+#   OS you are using.
+#
 nginx: v1.18.0
-# ------------------------------------------------------------------------------

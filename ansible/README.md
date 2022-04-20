@@ -29,19 +29,18 @@ completed.
 already taken care of by the built-in Tsunami tasks.
 
 ## Variables
-Certain variables are defined that can be useful when writing application specific
-Ansible.
+The following variables are defined and can be useful when writing application
+specific Ansible.
 
-1. `app_<YAML_FILE>`
+* `app_<YAML_FILE>`
     - Your ansible code has access to all the values in all of the YAML
-      files in your TAC repo. They can be accessed using the special `app_<YAML_FILE>`
-      variables. Each of the YAML files gets parsed into a variable named 
-      `app_<YAML_FILE>`. You can then reference values in those variables using
-      dot notation.
+      files in your TAC repo. Each of the YAML files gets parsed into a variable
+      named `app_<YAML_FILE>`. You can then reference values in those variables
+      using dot notation.
     - Example: The `groups` value from the `system.yml` file can be accessed
                using `app_system.groups`
     - Availability: Image Build & Deploy Time
-2. `ansible_host`
+* `ansible_host`
     - Usage: For getting the hostname/ip of a specific instance.
     - Availability: Image Build (w/caveats) & Deploy Time
     - Image Build Caveats
@@ -84,14 +83,6 @@ process.
 
 Failures in your ansible code will cause the execution to fail.
 
-### Example
-This TAC repo defines two Ansible Roles:
-- example-one
-- example-two
-
-The `main.yml` file executes each of these roles, using the `include_role` module,
-and a couple of simple in-line tasks as well.
-
 ## Restrictions
 The Tsunami Image building code can build images for Docker, Vagrant and AWS.
 
@@ -109,3 +100,6 @@ For example:
      state: present
   when: image_type == 'vagrant'
 ```
+
+## Examples
+See the YAML files and ansible roles in this directory for example usages.

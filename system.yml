@@ -1,67 +1,106 @@
 ---
+# SYSTEM - System Level Settings
+# ==============================
+# Used to specify system level settings. Includes settings that aren't
+# specifically related to the application or the OS.
+
+# Groups
+# ------
 # A list of groups to create or ensure that exists on the system.
 groups:
   - fprefect
 
+# Users
+# -----
 # A list of users to create or ensure that exists on the system.
-# Format: user:primary_group,other_group1,other_group2
-#         'user' and 'primary_group' are **required**
+#
+# Format: ``user:primary_group,other_group1,other_group2``
+#
+# Example: ``web:web,nginx,splunk``
+#
+# ``user`` and ``primary_group`` are **required**
+#
 users:
   - fprefect:fprefect
 
+# SSL Certificates
+# ----------------
 # List of SSL Certificates that need to be installed on the image.
-# Certs are installed to /etc/pki/tls
-# ssl_certificates:
-# - star.cengage.info
+#
+# Certs are installed to ``/etc/pki/tls``
+## ssl_certificates:
+## - star.cengage.info
 
+# Monitoring
+# ----------
 # Various setting related to monitoring
+#
+# :enable_snmp: Install and enable SNMPd | **Optional**
+#
+#   SNMP is **not** installed by default.
+#   Valid Values: yes | **no** | true | false
+#
+#   Should be set to ``yes`` if your instances need to be monitored by
+#   LogicMonitor.
+#
+# :enable_netdata: Install and enable NetData. | **Optional**
+#
+#   NetData is **not** installed by default.
+#   Valid Values: yes | **no** | true | false
+#
+# :enable_dynatrace: Install and enable Dynatrace | **Optional**
+#
+#   Dynatrace **is** installed by default.
+#   Valid Values: **yes** | no | true | false
+#
+#   .. CAUTION::
+#     Disabling the installation of Dynatrace should only be used in certain
+#     circumstances. We want Dynatrace installed on all of our system. Please be
+#     sure you know what you're doing before disabling it.
+#
+# :dynatrace: Additional installation options for Dynatrace | **Optional**
+#
+#   :infra_only_mode: Configure for Infrastructure Only monitoring | **Optional**
+#
+#     Valid Values: yes | **no** | true | false
+#
 monitoring:
-  # Install and Enable SNMPd.
-  # Required if your instances need to be monitored by LogicMonitor.
-  # SNMP is not installed by default
-  # To enable SNMP set this value to 'yes|true'
-  # Values: 'yes|no|true|false'
   enable_snmp: yes
-
-  # Install and Enable NetData.
-  # NetData is not installed by default
-  # To enable NetData set this value to 'yes|true'
-  # Values: 'yes|no|true|false'
   enable_netdata: yes
-
-  # Install and Enable Dynatrace
-  # DT is installed by default.
-  # To disable DT set this value to `no|false`
-  # Values: 'yes|no|true|false'
-  # enable_dynatrace: no
-
-  # Additional installation options for Dynatrace
-  # This section is optional.
   dynatrace:
-    # Configure for Infrastructure Only monitoring
-    # Default: false
     infra_only_mode: false
 #
-# Add additional storage devices to image
-# **ONLY** available for AWS AMIs
-# See: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html
+# Devices
+# -------
+# Add additional storage devices. This section is optional. You can define
+# zero or more additional storage devices.
 #
-# All fields are required.
-# devices:
-#   # Creates a 10GB volume on /dev/xvdb mounted to /opt
-#   - # Source block device
-#     ebs_device: /dev/sdb
-#     # Volume type. "gpX" - General Purpose
-#     volume_type: "gp3"
-#     # Size in GBs
-#     volume_size: 10
-#     # Desired device throughput
-#     throughput: 400
-#     # Input/Output ops/second. Only use for `io1` and `io2` types.
-#     iops: 3500
-#     # delete the volume on instance termination?
-#     delete_on_termination: true
-#     # Device name on the instance
-#     device_name: /dev/xvdb
-#     # Where to mount the `device_name`
-#     mount_path: /opt
+# If the application does not require any additional storage, then you can
+# leave the entire ``devices`` section out.
+#
+# .. ATTENTION::
+#   **Only** available for AWS AMIs.
+#
+#   See: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html
+#
+# All fields are **required**.
+#
+# :ebs_device: Source block device
+# :volume_type: Volume type
+# :volume_size: Size in GBs
+# :throughput: Desired device throughput
+# :iops: Input/Output ops/second. Only use for ``io1`` and ``io2`` types
+# :delete_on_termination: Delete the volume on instance termination?
+# :device_name: Device name on the instance
+# :mount_path: Where to mount the ``device_name``
+#
+##devices:
+##  # Creates a 10GB volume on /dev/xvdb mounted to /opt
+##  - ebs_device: /dev/sdb
+##    volume_type: "gp3"
+##    volume_size: 10
+##    throughput: 400
+##    iops: 3500
+##    delete_on_termination: true
+##    device_name: /dev/xvdb
+##    mount_path: /opt
