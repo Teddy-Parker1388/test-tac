@@ -42,7 +42,7 @@ confluence_server_pass = get_confluence_pass()
 # confluence_ask_password = True
 confluence_space_key = 'DEVOPS'
 confluence_parent_page = 'Tsunami Reference Apps'
-confluence_publish_prefix = 'TAC/'
+confluence_publish_prefix = 'MH/'
 confluence_page_hierarchy = True
 confluence_header_file = 'static/confluence-header.xml'
 
