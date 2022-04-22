@@ -1,21 +1,38 @@
 ---
-# The name of the application.
+# APP - Application Specific Settings
+# ===================================
+
+# Application Name
+# ----------------
+# The name of the application. This name should match here, the name of the TAC
+# repo and the name of the application in Harness.
 name: mostly-harmless
 
-# The installation path
+# Application Path
+# ----------------
+# The path where you would like the application installed. This is the path to
+# which the application artifact will be un-archived and from which it will be
+# run.
 path: /opt/mostly-harmless
 
-# The user and group that should own and run the application
+# Application User & Group Ownership
+# ----------------------------------
+# The user and group that should own and run the application.
 user: fprefect
 group: fprefect
 
-# Log files that should be sent to Splunk.
-# Requires three settings per log file.
-# 1. log_path - The path to the actual log. Required.
-# 2. index - The Splunk index to send the log to. Required.
-# 3. source - Subgrouping for the log file. Optional.
-# 4. sourcetype - The type of log file. Required.
-#        - See https://docs.splunk.com/Documentation/Splunk/8.0.5/Data/Listofpretrainedsourcetypes
+# Splunk Log Files
+# ----------------
+# .. _sourcetype: https://docs.splunk.com/Documentation/Splunk/8.0.5/Data/Listofpretrainedsourcetypes
+#
+# Log files that should be sent to Splunk. You can specify multiple log files,
+# each using the following settings:
+#
+# :log_path: The path to the actual log | **Required**
+# :index: The Splunk index to send the log to | **Required**
+# :source: Sub-grouping for the log file | **Optional**
+# :`sourcetype`_: The type of log file | **Required**
+#
 splunk:
   - log_path: "/opt/mostly-harmless/logs/request.log"
     index: devops_nonprod_logs
@@ -25,10 +42,17 @@ splunk:
     index: devops_nonprod_logs
     sourcetype: generic_single_line
     source: mostly-harmless-nginx-access-dev
-
+#
+# SplunkForwarder Configuration
+# -----------------------------
+# .. _thruput/maxKBps: https://docs.splunk.com/Documentation/Splunk/8.2.5/Admin/Limitsconf#.5Bthruput.5D
+#
 # App configurable settings for the SplunkForwarder
-# splunk_conf:
-#   # `limits.conf`
-#   limits:
-#     thruput:
-#       maxKBps: 1024
+#
+# We currently only support tweaking the following setting in ``limits.conf``.
+#
+# :`thruput/maxKBps`_: The maximum speed that incoming data is processed
+## splunk_conf:
+##   limits:
+##     thruput:
+##       maxKBps: 1024

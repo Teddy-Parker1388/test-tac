@@ -1,4 +1,4 @@
-# packer
+# PACKER - Application Specific Packer Code
 Application specific Packer code goes here.
 
 ## Required Files
@@ -10,4 +10,4 @@ Required Settings:
 Optional Settings:
 * `docker`: Used to specify changes to the Docker image metadata.
   - For example, it can be use to set an ENTRYPOINT for your application.
-  - See https://www.packer.io/docs/builders/docker#basic-example-changes-to-metadata
+  - See [Docker Builder](https://www.packer.io/docs/builders/docker#basic-example-changes-to-metadata)

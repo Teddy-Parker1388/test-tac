@@ -1,25 +1,22 @@
-# config
+# CONFIG - The Configuration File Directory
 Application specific config files/templates live here.
 
------
-
-**NOTE**
+```{ATTENTION}
 You SHOULD delete all the files in this directory and add the configuration
 files that are specific to YOUR application.
-
------
+```
 
 Config files can be of any type that the application requires. Each file is considered a [Jinja2](https://jinja.palletsprojects.com/en/2.11.x/) template and has access to a variety of variables from the `config.yml` file, the other application setup files and secrets stored in Vault.
 
 ## Variable Access
-All variables in the `params` section of a config file in `config.yml` can be accessed using the `params` base variable. Example: `params.myVar1`
+All variables in the `params` section for a config file in `config.yml` can be accessed using the `params` base variable. Example: `params.myVar1`
 
 **Secrets** stored in Vault can be accessed using the `secrets` base variable. 
 Example: `secrets.myDbPasswd`
 
 For more information on managing secrets in Vault for an application, see the *Managing Secrets* section below.
 
-Variables in the other application YAML files can be accessed using the `app_<NAME>` base variable where `NAME` is the name of the YAML file w/o the `.yml` suffix. 
+Variables in the other TAC YAML files can be accessed using the `app_<NAME>` base variable where `NAME` is the name of the YAML file w/o the `.yml` suffix. 
 
 For example: To access the `users` variable in the `system.yml` file you would
 address it as`app_system.users`

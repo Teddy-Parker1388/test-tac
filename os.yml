@@ -1,50 +1,76 @@
 ---
+# OS - Operating System & Tunings
+# ===============================
+# Used to set the operating system for the application as well as several other
+# OS level settings.
+
+# Operating System
+# ----------------
 # Which OS should the application run on.
-# Current choices: centos7 | amazon_linux2
+# Valid Choices: ``centos7`` | ``amazon_linux2``
 os: amazon_linux2
 
-# Required ulimits for a given user
-# ulimit:
-#   user: web
-#   limitnofile: 40000 #65536 or less
-#   limitnproc: 32768
-#   limitmemlock: 70000
+# Limits
+# ------
+# .. _`limits`: https://man7.org/linux/man-pages/man5/limits.conf.5.html
+#
+# Required `limits`_ for a given user
+## ulimit:
+##   user: web
+##   limitnofile: 40000
+##   limitnproc: 32768
+##   limitmemlock: 70000
 
 # tuneD
-## Profile Names for CentOS7
-## balanced
-## desktop
-## latency-performance
-## network-latency
-## network-throughput
-## powersave
-## throughput-performance
-## virtual-guest
-## virtual-host
-##
-## Choose to use either a built-in profile or a custom-built profile.
-## You **can NOT** use both. If both are defined, custom_profile wins!
-tuned:
-  # To use a built-in profile, set `profile`
-  profile: balanced
+# -----
+# .. _`tuned`: https://tuned-project.org
+# .. _`Custom Tuning`: https://docs.fedoraproject.org//en-US/Fedora/20/html/Power_Management_Guide/tuned.html
 #
-#  To use a custom-built profile, define it in `custom_profile`
-#  custom_profile:
-#     name: tsunami-ref-app
-#     sections:
-#       - name: main
-#         params:
-#           - option: summary
-#             value: Test
-#           - option: include
-#             value: virtual-guest
-#       - name: sysctl
-#         params:
-#           - option: vm.dirty_ratio
-#             value: 30
-#           - option: vm.swappiness
-#             value: 30
-#       - name: vm
-#         params:
-#           - option: transparent_hugepages
-#             value: never
+# `tuned`_ is a system tuning service. It is automatically install on all
+# Tsunami built images. These settings allow you to either choose a built-in
+# tuning profile or configure a custom profile.
+#
+# :profile: The name of a built-in profile to use | **Optional'ish**
+#
+#   Valid Options:
+#
+#     - balanced
+#     - desktop
+#     - latency-performance
+#     - network-latency
+#     - network-throughput
+#     - powersave
+#     - throughput-performance
+#     - virtual-guest
+#     - virtual-host
+#
+# :custom_profile: Used to defined a custom profile | **Optional'ish**
+#
+#   See The `Custom Tuning`_ Guide.
+#
+# .. CAUTION::
+#   **Requires** exactly one of ``profile`` or ``custom_profile``.
+#
+#   You **can not** use both. If both are defined, ``custom_profile`` wins!
+#
+tuned:
+  profile: balanced
+##  custom_profile:
+##     name: tsunami-ref-app
+##     sections:
+##       - name: main
+##         params:
+##           - option: summary
+##             value: Test
+##           - option: include
+##             value: virtual-guest
+##       - name: sysctl
+##         params:
+##           - option: vm.dirty_ratio
+##             value: 30
+##           - option: vm.swappiness
+##             value: 30
+##       - name: vm
+##         params:
+##           - option: transparent_hugepages
+##             value: never

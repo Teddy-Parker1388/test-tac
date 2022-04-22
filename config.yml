@@ -1,77 +1,111 @@
 ---
-# Shared Section
+# CONFIG - Configuration Files
+# ============================
+# This file allows you to describe all the configuration files needed by your
+# application along with parameters to each file that get filled in when
+# the file is process & installed.
+
+# Shared Parameters
+# -----------------
+# The parameters listed in this section are available to all of the config files
+# listed below in the ``FILES`` section.
+#
+# You can access shared parameters in your config files using the ``shared_params``
+# variable. For example: ``{{ shared_params.hidden_msg }}``
+#
+# .. NOTE::
+#   Also note that any outputs listed in ``terraform/dependencies/outputs.tf``
+#   will be made available to your config files as shared parameters.
+#
 SHARED:
-  # All config files have access to any variables in the SHARED:params section
   params: {}
 
+# Configuration Files
+# -------------------
 # A list of configuration files needed by your application.
-# Each file consists of:
-# * name: The name of the file in the config/ directory.
-# * metadata: Metadata about the file
-#   - path: Where the file should be written.
-#         *REQUIRED*
-#   - dest_name: Name of the file in it's final destination.
-#         Usage should be limited. A good use-case is for "dot" files
-#         that you don't want to start with a `.` in the git repo, lest
-#         they be hidden, but must start with a `.` when installed.
-#         See `dot-trarc` below as an example.
-#         *OPTIONAL -- Defaults to `name` above*
-#   - user: User who owns the file.
-#         *OPTIONAL -- Default: `user` as listed in app.yml*
-#   - group: Group access to the file.
-#         *OPTIONAL -- Default: `group` as listed in app.yml*
-#   - perms: File Permissions.
-#         *OPTIONAL -- Default: 0640*
-#   - restart: The name of a service to restart if this config file changes.
-#         Mainly used to trigger a restart of a third-party service that
-#         may be dependent on the config file, e.g. nginx.
 #
-#         NOTE #1: You do **not** need to list your application here. Any
+# You can describe each of your configuration files using the following settings:
+#
+# :name: The name of the file in the ``config/`` directory | **Required**
+# :metadata: Metadata about the file
+#
+#   :path: The destination path to where the file should be written. | **Required**
+#   :dest_name: Name of the file in it's final destination. | **Optional**
+#
+#       Usage should be limited. A good use-case is for "dot" files
+#       that you don't want to start with a `.` in the git repo, lest
+#       they be hidden, but must start with a `.` when installed.
+#       Defaults to ``name`` (above)
+#   :user: User who owns the file. | **Optional**
+#
+#       Defaults to ``user`` as listed in ``app.yml``
+#   :group: Group access to the file. | **Optional**
+#
+#       Defaults ``group`` as listed in ``app.yml``
+#   :perms: File Permissions. | **Optional**
+#
+#       Defaults to ``0640``
+#   :restart: The name of a service to restart if this config file changes. | **Optional**
+#
+#       Mainly used to trigger a restart of a third-party service that
+#       may be dependent on the config file, e.g. nginx.
+#
+#       .. TIP::
+#         You do **not** need to list your application here. Any
 #         changes to any config file will automatically cause your
 #         application to be restarted.
 #
-#         NOTE #2: See note about `.service` files below.
+#       .. IMPORTANT::
+#         See note about `.service` files below.
 #
-#         *OPTIONAL -- Default: none*
-# * params: Freeform mapping of environment specific parameters to their values.
-#       These params are **only** accessible to the config file they are
-#       defined under.
-#       *OPTIONAL -- Defaults to empty map*
-# * addtl_secrets: Additional Secrets needed by the config file.
-#      Tsunami will look for secrets for each config file in a designated path in
-#      Vault. See the 'Managing Secrets' section of config/README.md for more
-#      details.
+# * :params: Freeform mapping of environment specific parameters to their values. | **Optional**
 #
-#      However, there may be times when you need to pull in additional secrets from
-#      other locations in Vault. An example would be a secret that is shared
-#      across environments or config files that you don't want and shouldn't have
-#      to store in multiple locations in Vault. In this case you can use this setting
-#      to configure additional secrets to be read from Vault and stored on a per
-#      config file basis for use in the config file.
+#     These params are **only** accessible to the config file to which they are attached.
+#     You can access these parameters in your config files using the ``params``
+#     variable. For example: ``{{ params.port }}``.
+# * :addtl_secrets: Additional Secrets needed by the config file. | **Optional**
 #
-#      This setting is a mapping between a `name` and a Vault path. The secret
-#      at the specified path will be read from Vault and stored in a variable
-#      with the given `name`. All additional secrets are stored under a top-level
-#      variable named `addtl_secrets` that can be used in the config file template.
-#      The Vault path should *not* include the `secret/` prefix.
+#     Tsunami will look for secrets for each config file in a designated path in
+#     Vault. See the *Managing Secrets* section of ``config/README.md`` for more
+#     details.
 #
-#      See the example below in the `default.json` config file section.
+#     However, there may be times when you need to pull in additional secrets from
+#     other locations in Vault. An example would be a secret that is shared
+#     across environments or config files that you don't want and shouldn't have
+#     to store in multiple locations in Vault. In this case you can use this setting
+#     to configure additional secrets to be read from Vault and stored on a per
+#     config file basis for use in the config file.
 #
-#      *OPTIONAL -- Defaults to empty map*
-# ------------------------------------------------------------------------------
-# Special Files:
-# * .service
-#    - Any file that ends with `.service` is assumed to be a systemd unit file
-#      used to control the starting, stopping and restarting of a service.
-#    - You can have as many of these as you need.
-#    - All `metadata` is optional...
-#      - path - defaults to /etc/systemd/system
-#      - user - defaults to root
-#      - group - defaults to root
-#    - Any change to any other config files will trigger each of your services
-#      to be restarted.
-#    - You should **not** use the `restart` param to trigger a restart of any
-#      of your services (.service files). See above.
+#     This setting is a mapping between a ``name`` and a Vault ``path``. The secret
+#     at the specified ``path`` will be read from Vault and stored in a variable
+#     with the given ``name``.
+#
+#     You can access these additional secrets in your config files by using the
+#     ``addtl_secrets`` variable.
+#
+#     For example: ``{{ addtl_secrets.shared.admin_passwd }}``
+#
+#     The Vault path should **not** include the ``secret/`` prefix.
+#
+#     See the example below in the ``default.json`` config file section.
+#
+# .. ATTENTION::
+#   **Special Files**
+#
+#   * .service
+#      - Any file that ends with ``.service`` is assumed to be a systemd unit file
+#        used to control the starting, stopping and restarting of a service.
+#      - You can have as many of these as you need.
+#      - All ``metadata`` is optional:
+#
+#        - ``path`` - defaults to ``/etc/systemd/system``
+#        - ``user`` - defaults to ``root``
+#        - ``group`` - defaults to ``root``
+#      - Any change to any other config files will trigger each of your services
+#        to be restarted.
+#      - You should **not** use the ``restart`` param to trigger a restart of any
+#        of your services (.service files). See above.
+#
 FILES:
   - name: mostly-harmless.conf
     metadata:

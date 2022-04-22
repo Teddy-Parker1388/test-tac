@@ -1,37 +1,40 @@
 ---
-# ------------------------------------------------------------------------------
-# INFRASTRUCTURE
-# ------------------------------------------------------------------------------
+# INFRASTRUCTURE - Configurable Infrastructure Settings
+# =====================================================
+# Settings that help configure the application's infrastructure.
+#
 # Changes made to this file directly effect the Terraform code in the
-# `terraform` & `terraform/shared` directories.
+# ``terraform`` & ``terraform/shared`` directories.
 #
-# With the exception of `terraform/dependencies/backend.tf`, changes DO NOT
-# effect Terraform code in the `terraform/dependencies` directory since that
-# Terraform code is application specific.
+# Changes **DO NOT** effect Terraform code in the ``terraform/dependencies``
+# directory (with the exception of ``terraform/dependencies/backend.tf``)
 #
-# **IMPORTANT**  **IMPORTANT** **IMPORTANT** **IMPORTANT** **IMPORTANT**
-# In order to apply any changes made to this file, you **must** run:
-# bash> tsunami app update
+# .. ATTENTION::
+#   In order to apply any changes made to this file, you **must** run:
+#   ``bash> tsunami app update``
 #
-# The `tsunami app update` command also changes files outside of the
-# `terraform` directory.
+# The ``tsunami app update`` command may also change files outside of the
+# ``terraform`` directory.
 #
-# Also note that information in the other TAC YAML files may have effect on the
+# Also note that information in other TAC YAML files may have effect on the
 # Terraform code.
 #
-# Any changes made by the `tsunami app update` command are made locally to this
-# TAC repo. As such, you will be able to review those changes before committing
-# them back to BitBucket.
-# ------------------------------------------------------------------------------
+# Any changes made by the ``tsunami app update`` command are made locally to
+# this TAC repo. As such, you will be able to review those changes before
+# committing them back to BitBucket.
 
-# ------------------------------------------------------------------------------
-# ==> AWS Account Info <==
-# * This section to be completed by a DevOps Engineer *
-# ------------------------------------------------------------------------------
+# AWS Account Info
+# ----------------
+# .. NOTE::
+#   This section to be completed by a DevOps Engineer
+#
 # Each AppDev team gets two AWS accounts.
-# One for Non-production (dev, qa, stage, perf)
-# One for Production (prod)
-# ------------------------------------------------------------------------------
+#
+#   - One for Non-production (dev, qa, stage, perf)
+#   - One for Production (prod)
+#
+# **All values are required**
+#
 aws_accounts:
   non_prod:
     id: 901254650597
@@ -42,18 +45,34 @@ aws_accounts:
     name: devops-prod
     vpc_id: vpc-043bef4a5b31a6145
 
-# ------------------------------------------------------------------------------
-# ==> Infrastructure Specs <==
-# * This section to be completed by AppDev Team *
-# ------------------------------------------------------------------------------
-# `product_group` is mainly used for AWS tagging purposes
+# Infrastructure Specs
+# --------------------
+# :product_group: Team or Product Group that the application belongs to | **Required**
+#
+# :health_check: Load Balancer Health Check settings
+#
+#   :port: Port on the EC2 instance | **Required**
+#   :path: Path/URL of the health check endpoint | **Optional**
+#
+#     Defaults to ``/``
+#
+#   :protocol: Protocol used for health check | **Optional**
+#
+#     Defaults to **HTTP**
+#
+# :instance: Instance settings
+#
+#   :port: What port does your application listen for requests on | **Required**
+#   :type: EC2 Instance type | **Required**
+#
+#     See `EC2 Instance Types <https://aws.amazon.com/ec2/instance-types/>`_
+#
 product_group: DevOps
 health_check:
   port: 8080
-  path: "/" # Optional. Default: '/'
-  protocol: HTTP # Optional. Default: 'HTTP'
+  path: "/"
+  protocol: HTTP
 instance:
-  # App port - What port does your application listen for requests on
   port: 8080
   type: t3.medium
   count: 2

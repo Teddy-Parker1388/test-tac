@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2022-04-20
+* Added auto-generated docs using Sphinx.
+
 ## 2022-03-24
 * Updated the various README.md files and comments in YML files to be similar to
   tsunami-ref-app and to be useful for documentation.  
