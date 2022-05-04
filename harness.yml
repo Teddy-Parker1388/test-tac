@@ -19,6 +19,30 @@
 # Valid Values: `blue-green`_ OR `in-place`_ (Rolling)
 deployment_type: in-place
 
+# Users & Groups
+# --------------
+# The groups (along with member users) that should be created in Harness.
+#
+# Each listed group and user will be created if they do not already exist and
+# each listed user will be added to the indicated groups.
+#
+# It is suggested that you have at least two groups:
+#
+# A Team group that contains all the members of the AppDev team that should
+# have access to the Application in Harness.
+#
+# A Notifications group. Users in this group would get notifications from
+# Harness when a deployment fails.
+#
+# Users should be listed by their email address.
+groups:
+  DevOps Team:
+    - user.one@cengage.com
+    - user.two@cengage.com
+  DevOps Notifications:
+    - user.one@cengage.com
+    - user.two@cengage.com
+
 # Notifications
 # -------------
 # The Harness group that should receive deployment notifications.
