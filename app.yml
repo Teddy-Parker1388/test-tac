@@ -35,13 +35,13 @@ group: fprefect
 #
 splunk:
   - log_path: "/opt/mostly-harmless/logs/request.log"
-    index: devops_nonprod_logs
+    index: "devops_{{ 'prod' if env == 'prod' else 'nonprod' }}_logs"
     sourcetype: generic_single_line
-    source: mostly-harmless-app-requests-dev
+    source: "mostly-harmless-app-requests-{{ env }}"
   - log_path: "/var/log/nginx/access.log"
-    index: devops_nonprod_logs
+    index: "devops_{{ 'prod' if env == 'prod' else 'nonprod' }}_logs"
     sourcetype: generic_single_line
-    source: mostly-harmless-nginx-access-dev
+    source: "mostly-harmless-nginx-access-{{ env }}"
 #
 # SplunkForwarder Configuration
 # -----------------------------
