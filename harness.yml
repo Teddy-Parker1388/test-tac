@@ -21,7 +21,19 @@ deployment_type: in-place
 
 # Users & Groups
 # --------------
-# The groups (along with member users) that should be created in Harness.
+# A list of Groups (and Users) that should be created in Harness.
+#
+# Each Group consists of:
+#
+# :name: The name of the Group | **Required**
+# :type: The type of Group. | **Required**
+#
+#   Valid values:
+#
+#   :team: Group will have full access to the Application in Harness
+#   :notification: Group will receive deployment notifications from Harness
+#
+# :members: A list of the email addresses for users who should be part of the Group. | **Required**
 #
 # Each listed group and user will be created if they do not already exist and
 # each listed user will be added to the indicated groups.
@@ -31,23 +43,20 @@ deployment_type: in-place
 # A Team group that contains all the members of the AppDev team that should
 # have access to the Application in Harness.
 #
-# A Notifications group. Users in this group would get notifications from
-# Harness when a deployment fails.
-#
-# Users should be listed by their email address.
+# A Notifications group. Users in this group will receive deployment notifications
+# from Harness.
 groups:
-  DevOps Team:
-    - user.one@cengage.com
-    - user.two@cengage.com
-  DevOps Notifications:
-    - user.one@cengage.com
-    - user.two@cengage.com
-
-# Notifications
-# -------------
-# The Harness group that should receive deployment notifications.
-notifications:
-  - DevOps
+  - name: DevOps Team
+    type: team
+    members:
+      - user.one@cengage.com
+      - user.two@cengage.com
+  - name: DevOps Notifications
+    type: notification
+    members:
+      - user.one@cengage.com
+      - user.two@cengage.com
+      - user.three@cengage.com
 
 # Artifact
 # --------
