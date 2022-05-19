@@ -15,6 +15,16 @@ name: mostly-harmless
 # run.
 path: /opt/mostly-harmless
 
+# Artifact Options
+# ----------------
+# Options that effect the artifact installation.
+#
+# :expand: Whether or not to expand the artifact. By default Tsunami will expand
+#          all artifact formats except ``JAR`` and ``WAR``. You can use this
+#          flag to override that behavior. | **Optional**
+# artifact:
+#   expand: yes | no
+
 # Application User & Group Ownership
 # ----------------------------------
 # The user and group that should own and run the application.
