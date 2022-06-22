@@ -113,8 +113,10 @@ artifact:
 #   :job_name: The actual job name as known to Jenkins | **Required**
 #   :parameters: A mapping of parameters that the job accepts. | **Required**
 #
-#     Parameter values can make use of variables defined by Harness. For
-#     example ``${env.name}``
+#     Parameter values can make use of these variables defined by Harness:
+#       * ``app.name`` - The name of the Harness Application.
+#       * ``env.name`` - The name of the environment being deployed to.
+#       * ``context.tsunamiInfra.ROUTE_PRIVATE`` - The internal ALB URL to the newly deployed instances.
 #
 #   :environments: The job will run when deployed to any of the environments in
 #                  the list. | **Required**
