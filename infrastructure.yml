@@ -75,4 +75,4 @@ health_check:
 instance:
   port: 8080
   type: t3.medium
-  count: 2
+  count: 3
