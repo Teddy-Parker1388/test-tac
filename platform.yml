@@ -19,7 +19,7 @@
 # .. CAUTION::
 #   Tsunami **does not** support non-LTS versions.
 #
-#   Supported LTS Versions: 10, 12, 14
+#   Supported LTS Versions: 10, 12, 14, 16
 #
 nodejs: v14.15.4
 #

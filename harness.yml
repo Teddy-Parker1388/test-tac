@@ -104,7 +104,7 @@ artifact:
 #
 # We currently support deployment verification using...
 #
-# :jenkins: Deployment verification by Jenkins job.
+# :jenkins: Deployment verification by Jenkins job. **Required**
 #
 #   At least one Jenkins job is required. You can configure as many as necessary.
 #   All Jenkins jobs listed here are assumed to be configured on `jenkins-qa-automation.cengage.info`
@@ -147,7 +147,7 @@ artifact:
 #     If the query produces any results, meaning that it found errors, it will
 #     cause the deployment to fail.
 #
-#     If you have disabled Splunk analysis, you should set this value to an empty list: ``[]``
+#     If you have disabled Splunk analysis, you should set this value to an empty value: ``{}``
 #
 # :dynatrace: Dynatrace deployment verification. | **Deferred**
 #
@@ -159,7 +159,7 @@ artifact:
 #     Dynatrace verification has to be set up **after** the first deployment to
 #     each environment.
 #
-#     **There are no settings required here at this time**
+#     **There are no settings required for Dynatrace at this time**
 #
 verification:
   jenkins:

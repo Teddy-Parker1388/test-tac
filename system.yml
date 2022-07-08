@@ -7,6 +7,9 @@
 # Groups
 # ------
 # A list of groups to create or ensure that exists on the system.
+#
+# The ``groups`` settings section is **Optional**
+#
 groups:
   - fprefect
 
@@ -20,14 +23,27 @@ groups:
 #
 # ``user`` and ``primary_group`` are **required**
 #
+# The ``users`` settings section is **Optional**
+#
 users:
   - fprefect:fprefect
 
 # SSL Certificates
 # ----------------
-# List of SSL Certificates that need to be installed on the image.
+# List of SSL Certificates that need to be installed on the image. **Optional**
 #
 # Certs are installed to ``/etc/pki/tls``
+#
+# .. NOTE::
+#     You do **not** need to list the SSL certificates required by the
+#     application
+#     infrastructure, i.e. the load balancer. Those are taken care of elsewhere.
+#
+#     These certificates would be certs that are used directly by your
+#     application.
+#
+# The ``ssl_certificates`` settings section is **Optional**
+#
 ## ssl_certificates:
 ## - star.cengage.info
 
@@ -64,6 +80,8 @@ users:
 #
 #     Valid Values: yes | **no** | true | false
 #
+# The ``monitoring`` settings section is **Optional**
+#
 monitoring:
   enable_snmp: yes
   enable_netdata: yes
@@ -93,6 +111,8 @@ monitoring:
 # :delete_on_termination: Delete the volume on instance termination?
 # :device_name: Device name on the instance
 # :mount_path: Where to mount the ``device_name``
+#
+# The ``devices`` settings section is **Optional**
 #
 ##devices:
 ##  # Creates a 10GB volume on /dev/xvdb mounted to /opt

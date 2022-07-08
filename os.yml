@@ -15,6 +15,14 @@ os: amazon_linux2
 # .. _`limits`: https://man7.org/linux/man-pages/man5/limits.conf.5.html
 #
 # Required `limits`_ for a given user
+#
+# Currently supports:
+#     - nofile
+#     - nproc
+#     - memlock
+#
+# The ``ulimit`` settings section is **Optional**
+#
 ## ulimit:
 ##   user: web
 ##   limitnofile: 40000
@@ -52,6 +60,8 @@ os: amazon_linux2
 #   **Requires** exactly one of ``profile`` or ``custom_profile``.
 #
 #   You **can not** use both. If both are defined, ``custom_profile`` wins!
+#
+# The ``tuned`` settings section is **Optional**
 #
 tuned:
   profile: balanced

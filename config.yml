@@ -17,8 +17,11 @@
 #   Also note that any outputs listed in ``terraform/dependencies/outputs.tf``
 #   will be made available to your config files as shared parameters.
 #
-SHARED:
-  params: {}
+# The ``SHARED`` settings section is **Optional**
+#
+## SHARED:
+##  params:
+##    this: that
 
 # Configuration Files
 # -------------------
@@ -105,6 +108,8 @@ SHARED:
 #        to be restarted.
 #      - You should **not** use the ``restart`` param to trigger a restart of any
 #        of your services (.service files). See above.
+#
+# The ``FILES`` settings section is **Optional**
 #
 FILES:
   - name: mostly-harmless.conf

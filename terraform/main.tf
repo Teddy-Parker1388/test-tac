@@ -130,7 +130,7 @@ module "sec_grp_alb_private" {
 
 # Private ALB
 module "app_lb_private" {
-  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.2.0"
+  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.3.0"
 
   load_balancer_type = "application"
   name               = "${var.app_name}-${var.app_env}-private"
@@ -226,7 +226,7 @@ resource "aws_lb_target_group_attachment" "register_instances_private" {
 
 # Public ALB
 module "app_lb_public" {
-  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.2.0"
+  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.3.0"
 
   load_balancer_type = "application"
   name               = "${var.app_name}-${var.app_env}-public"
