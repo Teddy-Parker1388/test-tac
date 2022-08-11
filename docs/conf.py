@@ -19,12 +19,12 @@ project = 'Mostly Harmless'
 this_year = datetime.date.today().year
 copyright = F'2020-{this_year}, Cengage DevOps Team'
 author = 'Cengage DevOps Team'
+version = release = str(datetime.date.today())
 
 # -- General configuration ---------------------------------------------------
 ## Extensions
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx_rtd_theme',
     'myst_parser',
     'sphinxcontrib.confluencebuilder'
 ]
@@ -57,11 +57,8 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------
-html_theme = 'sphinx_rtd_theme'
-
-html_theme_options = {
-    'style_nav_header_background': '#056F5F',
-    'collapse_navigation': True,
-}
-
+# https://pradyunsg.me/furo/quickstart/
+html_theme = 'furo'
 html_static_path = ['static']
+html_title = f'{project} {version}'
+html_logo = "static/logo.png"

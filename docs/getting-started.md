@@ -50,7 +50,7 @@ Basic guidance on grooming the provided TAC files to suit your application's nee
 * Update `infrastructure.yml`
 * Set `deployment_type` in `harness.yml`
 * Commit the changes so far back to git.
-* Run `tsunami app update`
+* Run `tsunami tac sync`
   - This will update a few terraform and possibly other files
   - Verify the changes with `git diff`
   - If you update the `infrastructure.yml` file, be sure to re-run this command.
@@ -84,7 +84,7 @@ Create the next branch/environment by branching the previous environment branch:
 2. `bash> git pull`
 3. `bash> git checkout -b <NEXT-ENV>`
 
-Next, run `tsunami app update`. This will update the necessary files to be specific
+Next, run `tsunami tac sync`. This will update the necessary files to be specific
 to the new branch/environment.
 
 You will also need to update the following on an environment by environment basis:
