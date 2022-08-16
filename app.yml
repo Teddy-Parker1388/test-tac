@@ -22,8 +22,18 @@ path: /opt/mostly-harmless
 # :expand: Whether or not to expand the artifact. By default Tsunami will expand
 #          all artifact formats except ``JAR`` and ``WAR``. You can use this
 #          flag to override that behavior. | **Optional**
-# artifact:
-#   expand: yes | no
+#
+# .. NOTE::
+#   Unexpanded artifacts will be renamed on installation using the name of the
+#   application.
+#
+#   For Example: ``mostly-harmless-2.30.1-20220226.024557-36.jar`` => ``mostly-harmless.jar``
+#
+#   This allows for a consistent name that you can use if you need to reference
+#   the artifact from a start-up script or similar.
+#
+## artifact:
+##   expand: yes | no
 
 # Application User & Group Ownership
 # ----------------------------------
