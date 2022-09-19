@@ -44,8 +44,8 @@ users:
 #
 # The ``ssl_certificates`` settings section is **Optional**
 #
-## ssl_certificates:
-## - star.cengage.info
+ssl_certificates:
+  - star.devopstest.info
 
 # Monitoring
 # ----------
