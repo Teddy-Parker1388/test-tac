@@ -45,7 +45,7 @@ users:
 # The ``ssl_certificates`` settings section is **Optional**
 #
 ssl_certificates:
-  - star.devopstest.info
+  - star.devopstry.info
 
 # Monitoring
 # ----------
