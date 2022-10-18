@@ -1,7 +1,7 @@
 {
     "port": "{{ params.port }}",
     "access_code": "{{ secrets.access_code }}",
-    "comment": "Teddy Parker",
+    "comment": "Arthur Dent",
     "nodeId": "{{ tsunami_node_id | default(0) }}",
     "primary": "{{ 'true' if (tsunami_node_id|default(0)) == 1 else 'false' }}",
     "host": "{{ ansible_host if tsunami_action == 'deploy' else '127.0.0.1' }}"
