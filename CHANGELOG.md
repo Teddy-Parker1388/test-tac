@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2022-10-27
+* Removed the Sphinx generated docs. They are now part of the Tsunami docs.
+
 ## 2022-04-20
 * Added auto-generated docs using Sphinx.
 
