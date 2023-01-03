@@ -7,6 +7,7 @@ locals {
 
 data "aws_acm_certificate" "cengage_info" {
   domain = "*.cengage.info"
+  most_recent = true
 }
 
 // -- Load Necessary Subnet Ids --
