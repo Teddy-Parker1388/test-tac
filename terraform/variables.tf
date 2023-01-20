@@ -1,6 +1,6 @@
 ################################################################################
 # => The contents of this file have been automatically updated by Tsunami <=
-# You **can** manually edit this file. 
+# You **can** manually edit this file.
 #
 # However, be aware that the next time Tsunami updates this file you will loose
 # some formatting and all comments.
@@ -19,7 +19,7 @@ variable "instance_count" {
 
 variable "add_to_logicmonitor" {
   type        = string
-  default     = "true"
+  default     = "false"
   description = "Controls an instance Tag named AddToLogicMonitor. When 'true' and the ASG-to-LM bridge is properly configured, new instance will be added to LogicMonitor on ASG scale-up events."
 }
 
@@ -106,13 +106,6 @@ variable "ingress_instance" {
     },
     {
       rule        = "all-icmp"
-      cidr_blocks = "10.0.0.0/8"
-    },
-    {
-      from_port   = 161
-      to_port     = 162
-      protocol    = "udp"
-      description = "LogicMonitor - SNMP"
       cidr_blocks = "10.0.0.0/8"
     },
     {

@@ -83,7 +83,7 @@ ssl_certificates:
 # The ``monitoring`` settings section is **Optional**
 #
 monitoring:
-  enable_snmp: yes
+  enable_snmp: no
   enable_netdata: yes
   dynatrace:
     infra_only_mode: false

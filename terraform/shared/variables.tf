@@ -1,6 +1,6 @@
 ################################################################################
 # => The contents of this file have been automatically updated by Tsunami <=
-# You **can** manually edit this file. 
+# You **can** manually edit this file.
 #
 # However, be aware that the next time Tsunami updates this file you will loose
 # some formatting and all comments.
