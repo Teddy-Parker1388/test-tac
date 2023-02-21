@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2023-02-16
+* Updated Terraform code to use AWS Provider v4.52
+  - ...including newer versions of Cengage TF Modules that support v4.52+
+
 ## 2022-10-27
 * Removed the Sphinx generated docs. They are now part of the Tsunami docs.
 
