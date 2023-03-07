@@ -76,7 +76,7 @@ variable "app_healthcheck_port" {
 variable "app_healthcheck_path" {
   description = "The path to use for application health checks"
   type        = string
-  default     = "/"
+  default     = "/api/health"
 }
 
 variable "app_healthcheck_protocol" {

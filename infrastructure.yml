@@ -70,7 +70,7 @@ aws_accounts:
 product_group: DevOps
 health_check:
   port: 8080
-  path: "/"
+  path: "/api/health"
   protocol: HTTP
 instance:
   port: 8080
