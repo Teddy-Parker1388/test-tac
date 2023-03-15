@@ -42,7 +42,7 @@ output "inventory" {
   value = join(
     "\n",
     formatlist(
-      "%s tsunami_node_id=%s Id=%s",
+      "%s tsunami_node_id=%s aws_instance_id=%s",
       aws_instance.app_instance.*.private_ip,
       aws_instance.app_instance.*.tags.TsunamiNodeId,
       aws_instance.app_instance.*.id
