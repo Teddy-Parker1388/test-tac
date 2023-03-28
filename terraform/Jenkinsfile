@@ -1,7 +1,8 @@
-tfChecker([
-    app_env: "DEV",
-    vpc_id: "vpc-05888f065bca4b7d1"
-    ],
-    [:],
-    "./terraform"
-)
+// ...disabled b/c it's broken and don't know who wrote it or maintains it...
+// tfChecker([
+//     app_env: "DEV",
+//     vpc_id: "vpc-05888f065bca4b7d1"
+//     ],
+//     [:],
+//     "./terraform"
+// )

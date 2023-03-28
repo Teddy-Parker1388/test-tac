@@ -2,6 +2,7 @@
 
 ## 2023-03-28
 * Added support for multiple clusters per environment
+* Disabled `tfChecker` in `terraform/Jenkinsfile`
 
 ## 2023-02-16
 * Updated Terraform code to use AWS Provider v4.52
