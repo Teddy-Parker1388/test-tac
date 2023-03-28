@@ -19,12 +19,15 @@ terraform {
 }
 
 locals {
-  env_type = var.app_env == "prod" ? "prod" : "non-prod"
+  env_name = trimsuffix(var.app_env, "-${var.app_cluster}")
+  env_type = local.env_name == "prod" ? "prod" : "non-prod"
+  app_id   = trimsuffix("${var.app_name}-${local.env_name}-${var.app_cluster}", "-")
 
   common_tags = {
     Name        = var.app_name
     Product     = var.app_product
     App         = var.app_name
-    Environment = var.app_env
+    Environment = local.env_name
+    Cluster     = var.app_cluster
   }
 }

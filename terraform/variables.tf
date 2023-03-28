@@ -67,6 +67,12 @@ variable "app_port" {
   default     = 8080
 }
 
+variable "app_cluster" {
+  description = "App Deployment Cluster. Try to keep the value short."
+  type        = string
+  default     = "MAIN"
+}
+
 variable "app_healthcheck_port" {
   description = "The port to use for application health checks"
   type        = number
@@ -128,4 +134,3 @@ variable "egress_all" {
     }
   ]
 }
-

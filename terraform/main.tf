@@ -38,15 +38,20 @@ data "aws_ami" "base_image" {
   // CentOS-7 or AmazonLinux2
   filter {
     name   = "name"
-    values = ["${var.app_name}-${var.app_env}*"]
+    values = ["${local.app_id}*"]
+  }
+
+  filter {
+    name   = "tag:Cluster"
+    values = ["${var.app_cluster}"]
   }
 }
 
 # Instance Security Group
 module "sec_grp_instance" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.3.0"
-  name        = "${var.app_name}-${var.app_env}-instance"
-  description = "${var.app_name}-${var.app_env} instance security group"
+  name        = "${local.app_id}-instance"
+  description = "${local.app_id} instance security group"
   vpc_id      = var.vpc_id
 
   tags = local.common_tags
@@ -61,7 +66,7 @@ resource "tls_private_key" "ssh_key" {
 }
 
 resource "aws_key_pair" "ssh_key_pair" {
-  key_name   = "${var.app_name}-${var.app_env}-key-pair"
+  key_name   = "${local.app_id}-key-pair"
   public_key = tls_private_key.ssh_key.public_key_openssh
 }
 
@@ -83,7 +88,7 @@ resource "aws_instance" "app_instance" {
   tags = merge(
     local.common_tags,
     {
-      Name          = "${var.app_name}-${var.app_env}-${count.index}"
+      Name          = "${local.app_id}-${count.index}"
       TsunamiNodeId = count.index + 1
     }
   )
@@ -93,7 +98,7 @@ resource "aws_instance" "app_instance" {
 resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
   count = var.instance_count
 
-  alarm_name          = "${var.app_name}-${var.app_env}_${count.index}_${aws_instance.app_instance[count.index].id}_reboot"
+  alarm_name          = "${local.app_id}_${count.index}_${aws_instance.app_instance[count.index].id}_reboot"
   alarm_description   = "Reboot instance on failure."
   metric_name         = "StatusCheckFailed_Instance"
   namespace           = "AWS/EC2"
@@ -114,8 +119,8 @@ resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
 # ALB Security Group - Public
 module "sec_grp_alb_public" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.3.0"
-  name        = "${var.app_name}-${var.app_env}-alb-public"
-  description = "${var.app_name}-${var.app_env} Public ALB security group"
+  name        = "${local.app_id}-alb-public"
+  description = "${local.app_id} Public ALB security group"
   vpc_id      = var.vpc_id
 
   tags                     = local.common_tags
@@ -126,8 +131,8 @@ module "sec_grp_alb_public" {
 # ALB Security Group - Private
 module "sec_grp_alb_private" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.3.0"
-  name        = "${var.app_name}-${var.app_env}-alb-private"
-  description = "${var.app_name}-${var.app_env} Private ALB security group"
+  name        = "${local.app_id}-alb-private"
+  description = "${local.app_id} Private ALB security group"
   vpc_id      = var.vpc_id
 
   tags                     = local.common_tags
@@ -140,7 +145,7 @@ module "app_lb_private" {
   source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.4.0"
 
   load_balancer_type = "application"
-  name               = "${var.app_name}-${var.app_env}-private"
+  name               = "${local.app_id}-private"
   internal           = true
   vpc_id             = var.vpc_id
   subnets            = data.aws_subnets.private.ids
@@ -236,7 +241,7 @@ module "app_lb_public" {
   source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.4.0"
 
   load_balancer_type = "application"
-  name               = "${var.app_name}-${var.app_env}-public"
+  name               = "${local.app_id}-public"
   internal           = false
   vpc_id             = var.vpc_id
   subnets            = data.aws_subnets.public.ids

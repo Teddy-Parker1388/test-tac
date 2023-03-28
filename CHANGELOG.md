@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023-03-28
+* Added support for multiple clusters per environment
+
 ## 2023-02-16
 * Updated Terraform code to use AWS Provider v4.52
   - ...including newer versions of Cengage TF Modules that support v4.52+
