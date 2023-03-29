@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure Dest Dirs Exist
   file:
     path: "{{ base_path }}/{{ item }}"
@@ -10,8 +9,8 @@
 
 - name: Copy Splash Image
   copy:
-    src: "mostly-harmless-{{ env }}.jpg"
-    dest: "{{ base_path }}/html/images/mostly-harmless-{{ env }}.jpg"
+    src: "mostly-harmless-{{ env }}-{{ cluster }}.jpg"
+    dest: "{{ base_path }}/html/images/mostly-harmless-{{ env }}-{{ cluster }}.jpg"
     mode: "0644"
 
 - name: Install index.html

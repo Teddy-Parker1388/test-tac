@@ -57,11 +57,11 @@ splunk:
   - log_path: "/opt/mostly-harmless/logs/request.log"
     index: "devops_{{ 'prod' if env == 'prod' else 'nonprod' }}_logs"
     sourcetype: generic_single_line
-    source: "mostly-harmless-app-requests-{{ env }}"
+    source: "mostly-harmless-app-requests-{{ env }}-{{ cluster }}"
   - log_path: "/var/log/nginx/access.log"
     index: "devops_{{ 'prod' if env == 'prod' else 'nonprod' }}_logs"
     sourcetype: generic_single_line
-    source: "mostly-harmless-nginx-access-{{ env }}"
+    source: "mostly-harmless-nginx-access-{{ env }}-{{ cluster }}"
 #
 # SplunkForwarder Configuration
 # -----------------------------
