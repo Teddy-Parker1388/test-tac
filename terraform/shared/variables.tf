@@ -22,6 +22,12 @@ variable "app_env" {
   type        = string
 }
 
+variable "app_cluster" {
+  description = "App Deployment Cluster. Try to keep the value short."
+  type        = string
+  default     = "MAIN"
+}
+
 variable "app_product" {
   description = "Application Product Group"
   type        = string
@@ -32,4 +38,3 @@ variable "vpc_id" {
   default     = "vpc-05888f065bca4b7d1"
   description = "The deployment VPC on AWS."
 }
-
