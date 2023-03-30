@@ -119,7 +119,7 @@ resource "aws_cloudwatch_metric_alarm" "reboot_on_fail" {
 # ALB Security Group - Public
 module "sec_grp_alb_public" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.3.0"
-  name        = "${local.app_id}-alb-public"
+  name        = "${local.app_id}-alb-pub"
   description = "${local.app_id} Public ALB security group"
   vpc_id      = var.vpc_id
 
@@ -131,7 +131,7 @@ module "sec_grp_alb_public" {
 # ALB Security Group - Private
 module "sec_grp_alb_private" {
   source      = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-sg-extended.git?ref=1.3.0"
-  name        = "${local.app_id}-alb-private"
+  name        = "${local.app_id}-alb-pvt"
   description = "${local.app_id} Private ALB security group"
   vpc_id      = var.vpc_id
 
@@ -145,7 +145,7 @@ module "app_lb_private" {
   source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.4.0"
 
   load_balancer_type = "application"
-  name               = "${local.app_id}-private"
+  name               = "${local.app_id}-pvt"
   internal           = true
   vpc_id             = var.vpc_id
   subnets            = data.aws_subnets.private.ids
@@ -241,7 +241,7 @@ module "app_lb_public" {
   source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-alb.git?ref=1.4.0"
 
   load_balancer_type = "application"
-  name               = "${local.app_id}-public"
+  name               = "${local.app_id}-pub"
   internal           = false
   vpc_id             = var.vpc_id
   subnets            = data.aws_subnets.public.ids
