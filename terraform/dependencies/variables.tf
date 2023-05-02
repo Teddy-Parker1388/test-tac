@@ -64,6 +64,11 @@ variable "efs_performance_mode" {
   
 }
 
+variable "efs_security_group_description" {
+  description = "Description of EFS Security Group"
+  default=""
+}
+
 variable "efs_kms_key_id" {
   description = "When specifying kms_key_id , encrypted must be set to true"
   default = null
@@ -79,6 +84,43 @@ variable "efs_transition_to_ia" {
 /*
 variable "db_engine" {
   description = "Database engine"
+}
+
+variable "db_option_group_name_prefix" {
+  description = "Prefix for DB Option Group Name"
+  default = ""
+}
+
+variable "db_parameter_group_name_prefix" {
+  description = "Prefix for DB Parameter Group Name"
+  default = ""
+}
+
+variable "db_subnet_group_name_prefix" {
+  description = "Prefix for DB Subnet Group Name"
+  default = ""
+}
+
+
+variable "db_parameter_group_description" {
+  description = "Description for DB Parameter Group"
+  default = ""
+
+}
+variable "db_option_group_description" {
+  description = "Description for DB Option Group"
+  default = ""
+
+}
+
+variable "rds_security_group_description" {
+  description = "Description of RDS Security Group"
+  default=""
+}
+
+variable "db_subnet_group_description" {
+  description = "Description of DB Subnet Group"
+  default=""
 }
 
 variable "db_engine_version" {

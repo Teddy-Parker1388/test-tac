@@ -53,7 +53,7 @@ resource "random_password" "api_token" {
 // ** S3 Bucket **
 // create_s3_bucket = true 
 // bucket_to_create = {
-//   bucket = "${var.app_name}-${var.app_env}"
+//   bucket = "${local.app_id}-bucket"
 //   bucket_prefix = var.bucket_prefix
 //   force_destroy = true | false
 //   object_lock_enabled = true | false 
@@ -85,18 +85,18 @@ resource "random_password" "api_token" {
 
 // ** IAM Policy for S3 Access **
 // create_iam_policy = true | false
-// s3_iam_policy_name = "${var.app_name}-s3-policy-${var.app_env}"
+// s3_iam_policy_name = "${local.app_id}-s3-policy"
 // s3_iam_policy_statement = local.iam_policy_statement     // Map object defining the IAM Policy Statement
 
 // ** IAM Role for the inline IAM Policy
 // create_iam_role = true | false
-// s3_iam_role_name = "${var.app_name}-s3-role-${var.app_env}"
+// s3_iam_role_name = "${local.app_id}-s3-role"
 // s3_iam_role_policy = local.iam_role_statement
 
 
 // ** IAM Instance Profile **
 // create_instance_profile = true | false 
-// instance_profile_name = "${var.app_name}-s3-role-${var.app_env}"
+// instance_profile_name = "${local.app_id}-instance-profile"
 
 // }
 
@@ -134,7 +134,7 @@ module "efs" {
 
 // ** EFS File System **
 // efs_perf_mode = var.efs_performance_mode
-// creation_token = "${var.app_name}_${var.app_env}_services"    
+// creation_token = "${local.app_id}_services"    
 // encrypt = true | false 
 // throughput_mode = var.efs_throughput_mode
 // kms_key_id = var.efs_kms_key_id
@@ -143,8 +143,8 @@ module "efs" {
 
 // ** Security Groups for EFS File System **
 // create_security_group = true | false
-// efs_sec_grp_name = "${var.app_name}-efs"
-// efs_sec_grp_desc = "${var.app_name} EFS SG"
+// efs_sec_grp_name = "${local.app_id}-efs"
+// efs_sec_grp_desc = var.efs_security_group_description
 // efs_ingress = local.efs_ingress 
 // efs_egress = local.efs_egress
 // vpc_id = var.vpc_id
@@ -162,7 +162,7 @@ module "efs" {
 */
 
 
-// -- Provide EFS Support --
+// -- Provide RDS Support --
 // ** Uncomment to Provision RDS
 
 // -- Uncomment data block to query secrets for database username and password --
@@ -197,10 +197,10 @@ module "rds" {
 
 // ** RDS Database **
 //  create_rds_cluster = true | false     // true,creates RDS Cluster and Cluster Instance | false, creates DB Instance
-//  rds_cluster_identifier = "${var.app_name}-rds-cluster-${var.app_env}"     // REQUIRED if create_rds_cluster = true
+//  rds_cluster_identifier = "${local.app_id}-rds-cluster"     // REQUIRED if create_rds_cluster = true
 
-//  identifier = "${var.app_name}-rds-instance-${var.app_env}"
-//  database_name = "${var.app_name}"
+//  identifier = "${local.app_id}-rds-instance"
+//  database_name = "${local.app_id}-db"
 //  engine = var.db_engine
 //  engine_version = var.db_engine_version
 //  instance_class = var.db_instance_class
@@ -215,22 +215,22 @@ module "rds" {
 
 
 // ** Time in UTC **
-//  maintenance_window = "sat:04:00-sat:12:00"
-//  back_up_window = "00:00-04:00"
-//  backup_retention_period = 7
+//  maintenance_window = "sat:04:00-sat:12:00"    // Change as needed
+//  back_up_window = "00:00-04:00"               // Change as needed
+//  backup_retention_period = 7                 //  Change as needed
 
 // ** DB Subnet Group **
 // create_subnet_grp = true | false
-// db_subnet_group_description = "Subnet Group Description"
+// db_subnet_group_description = var.db_subnet_group_description
 // use_subnet_group_name_prefix = true | false
-// db_subnet_group_name = "db_subnet_group_name"
-//db_subnet_group_name_prefix = "db_subnet_group_name_prefix"
+// db_subnet_group_name = "${local.app_id}-subnet-group"
+//db_subnet_group_name_prefix = var.db_subnet_group_name_prefix
 // subnet_ids = data.aws_subnets.database.ids
 
 // ** Security Group **
 // create_security_group = true | false
-// rds_sec_grp_name = "security_group_name"
-// rds_sec_grp_desc = "Security Group Description"
+// rds_sec_grp_name = "${local.app_id}-rds"
+// rds_sec_grp_desc = var.rds_security_group_description
 // vpc_id = var.vpc_id
 // rds_ingress = local.rds_ingress
 // rds_egress = local.rds_egress
@@ -238,17 +238,18 @@ module "rds" {
 // ** DB Parameter Group **
 // create_db_param = true | false
 // use_db_parameter_group_name_prefix = true | false
-// db_parameter_group_name_prefix = "parameter_group_name_prefix"
-// db_parameter_group_name = "parameter_group_name"
-// db_parameter_group_description = "Parameter Group Description"
+// db_parameter_group_name_prefix = var.db_parameter_group_name_prefix
+// db_parameter_group_name = "${local.app_id}-parameter-group"
+// db_parameter_group_description = var.db_parameter_group_description
 // family = var.db_family
 
 
 // ** DB Option Group **
 // create_db_option = true | false
 // use_db_option_group_name_prefix = true | false
-// db_option_group_name = "db_option_group_name"
-// db_option_group_name_prefix = "db_option_group_name_prefix"
+// db_option_group_name = "${local.app_id}-option-group"
+// db_option_group_name_prefix = var.db_option_group_name_prefix
+// db_option_group_description = var.db_option_group_description
 // major_engine_version = var.db_major_engine_version
 
 
