@@ -84,7 +84,7 @@ ssl_certificates:
 #
 monitoring:
   enable_snmp: no
-  enable_netdata: yes
+  enable_netdata: no
   dynatrace:
     infra_only_mode: false
 #

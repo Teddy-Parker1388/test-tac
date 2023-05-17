@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023-05-17
+* Disabled NetData
+
 ## 2023-03-28
 * Added support for multiple clusters per environment
 * Disabled `tfChecker` in `terraform/Jenkinsfile`
