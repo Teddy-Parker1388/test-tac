@@ -3,5 +3,6 @@
   "docker": [
     "ENTRYPOINT [\"nginx\", \"-g\", \"daemon off;\"]"
   ],
-  "product": "DevOps"
+  "product": "DevOps",
+  "availability_zone": "us-east-1a"
 }
