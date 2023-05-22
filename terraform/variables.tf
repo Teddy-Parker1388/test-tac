@@ -107,13 +107,6 @@ variable "ingress_instance" {
     {
       rule        = "all-icmp"
       cidr_blocks = "10.0.0.0/8"
-    },
-    {
-      from_port   = 19999
-      to_port     = 19999
-      protocol    = "tcp"
-      description = "NetData"
-      cidr_blocks = "10.0.0.0/8"
     }
   ]
 }
