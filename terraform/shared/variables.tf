@@ -37,10 +37,11 @@ variable "app_product" {
 variable "app_runtime" {
   description = "Application Runtime Engine"
   type        = string
-  default     = "binary"
+  default     = "nginx"
 }
 
 variable "vpc_id" {
   default     = "vpc-05888f065bca4b7d1"
   description = "The deployment VPC on AWS."
 }
+
