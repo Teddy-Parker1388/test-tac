@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2023-05-22
+* Added `app_runtime` to `shared/variables.tf`
+* Added Dynatrace required tags to `locals.common_tags`
+
 ## 2023-05-17
 * Disabled NetData
 
