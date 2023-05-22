@@ -24,10 +24,13 @@ locals {
   app_id   = trimsuffix("${var.app_name}-${local.env_name}-${var.app_cluster}", "-")
 
   common_tags = {
-    Name        = var.app_name
-    Product     = var.app_product
-    App         = var.app_name
-    Environment = local.env_name
-    Cluster     = var.app_cluster
+    Name            = var.app_name
+    Product         = var.app_product
+    App             = var.app_name
+    Environment     = local.env_name
+    Cluster         = var.app_cluster
+    app-platform    = "${var.app_name}-${var.app_cluster}"
+    app-environment = local.env_name
+    app-service     = var.app_runtime
   }
 }
