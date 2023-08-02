@@ -48,7 +48,7 @@ resource "random_password" "api_token" {
 //}
 
 // module "s3" {
-//  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-s3-extended.git"
+//  source = "git::ssh://git@stash.cengage.com:7999/tm/terraform-aws-s3.git?ref=1.0.0"
 
 // ** S3 Bucket **
 // create_s3_bucket = true 
@@ -130,7 +130,7 @@ resource "random_password" "api_token" {
 /*
 module "efs" {
 
-// source = "ssh://git@stash.cengage.com:7999/tm/terraform-aws-efs.git"
+// source = "ssh://git@stash.cengage.com:7999/tm/terraform-aws-efs.git?ref=1.0.0"
 
 // ** EFS File System **
 // efs_perf_mode = var.efs_performance_mode
@@ -193,7 +193,7 @@ locals{
 
 /*
 module "rds" {
-  source = "ssh://git@stash.cengage.com:7999/tm/terraform-aws-rds.git"
+  source = "ssh://git@stash.cengage.com:7999/tm/terraform-aws-rds.git?ref=1.0.0"
 
 // ** RDS Database **
 //  create_rds_cluster = true | false     // true,creates RDS Cluster and Cluster Instance | false, creates DB Instance
