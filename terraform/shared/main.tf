@@ -22,9 +22,8 @@ locals {
   env_name = trimsuffix(var.app_env, "-${var.app_cluster}")
   env_type = local.env_name == "prod" ? "prod" : "non-prod"
   app_id   = trimsuffix("${var.app_name}-${local.env_name}-${var.app_cluster}", "-")
-
   common_tags = {
-    Name            = var.app_name
+    Name            = local.app_id
     Product         = var.app_product
     App             = var.app_name
     Environment     = local.env_name
