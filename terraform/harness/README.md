@@ -12,7 +12,7 @@ Creating the Application from the `dev` branch terraform files creates all the r
 ```
 
 ## General Workflow
-1. `tsunami harness tf-sync`
+1. `tsunami harness sync`
 2. Authenticate with AWS
 3. Authenticate with Vault and set your `VAULT_TOKEN` env variable.
 4. `cd terraform/harness`
