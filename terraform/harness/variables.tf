@@ -72,5 +72,6 @@ variable "deployment_type" {
 }
 
 variable "files" {
-  type = map(string)
+  type    = map(string)
+  default = {}
 }
