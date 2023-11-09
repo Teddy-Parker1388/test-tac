@@ -70,3 +70,7 @@ variable "build_infra_deps" {
 variable "deployment_type" {
   type = string
 }
+
+variable "files" {
+  type = map(string)
+}
