@@ -27,7 +27,7 @@
 <body style="background-color: black;">
     <img src="./images/mostly-harmless-{{ env }}-{{ cluster }}.jpg" class="center">
     <p class="center" style="color: chartreuse;">
-        <a href="/api">API</a> | <a href="/api/random">Random Data</a>
+        {{ inventory_hostname }} => <a href="/api">API</a> | <a href="/api/random">Random Data</a>
     </p>
 </body>
 
