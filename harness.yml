@@ -96,107 +96,60 @@ artifact:
     snapshots: cengage-snapshots
     releases: cengage-releases
 
-# Deployment Verification
-# -----------------------
+# Verification
+# ------------
 # Deployment verification entails running various types of automated tests
-# during a deployment. These tests help ensure that the application has
-# been properly deployed and is in a working state.
+# during a deployment. These tests help ensure that the application has been
+# properly deployed and is in a working state before switching live traffic to
+# the newly deployed instances.
 #
 # We currently support deployment verification using...
 #
-# :jenkins: Deployment verification by Jenkins job. **Required**
+# ### jenkins
+# At least one Jenkins job is required. You can configure as many as necessary.
+# All Jenkins jobs listed here are assumed to be configured on [Jenkins QA
+# Automation](https://jenkins-qa-automation.cengage.info)
 #
-#   At least one Jenkins job is required. You can configure as many as necessary.
-#   All Jenkins jobs listed here are assumed to be configured on `jenkins-qa-automation.cengage.info`
+# :::{TIP}
+#   **Jenkins Job Parameters**
 #
-#   :name: A descriptive name for the job | **Required**
-#   :job_name: The actual job name as known to Jenkins | **Required**
-#   :parameters: A mapping of parameters that the job accepts. | **Required**
+#   Parameter values can make use of these variables defined by Harness:
 #
-#     Parameter values can make use of these variables defined by Harness:
-#       * ``app.name`` - The name of the Harness Application.
-#       * ``env.name`` - The name of the environment being deployed to.
-#       * ``context.tsunamiInfra.ROUTE_PRIVATE`` - The internal ALB URL to the newly deployed instances.
-#
-#   :environments: The job will run when deployed to any of the environments in
-#                  the list. | **Required**
-#
-# :splunk: Deployment verification by Splunk log analysis
-#
-#   .. ATTENTION::
-#     Splunk analysis will run in **parallel** with the **LAST** Jenkins job
-#     listed above.
-#
-#     IF there is no traffic going to the application during the deployment
-#     verification stage then you don't need to activate the Splunk analysis.
-#
-#   :deploy_verification: List each environment for which you want to activate Splunk analysis. | **Required**
-#
-#     In general, this list should match the ``environments`` list from the LAST
-#     Jenkins job listed above.
-#
-#     To disable Splunk analysis set this value to an empty list: ``[]``
-#
-#   :queries: Set a Splunk query to use per environment | **Required**
-#
-#     Each query should be looking for errors and/or anomalous behavior in the
-#     application. Harness will execute this query every minute or so in parallel
-#     with the LAST Jenkins job. The Jenkins job should be hitting the application
-#     and generating traffic and log entries into Splunk.
-#
-#     If the query produces any results, meaning that it found errors, it will
-#     cause the deployment to fail.
-#
-#     If you have disabled Splunk analysis, you should set this value to an empty value: ``{}``
-#
-# :dynatrace: Dynatrace deployment verification. | **Deferred**
-#
-#   Dynatrace verification works similar to Splunk verification. Harness executes
-#   a Dynatrace query every minute or so looking for errors and anomalies. It
-#   runs in **parallel** with the LAST Jenkins job **and** the Splunk analysis
-#
-#   .. ATTENTION::
-#     Dynatrace verification has to be set up **after** the first deployment to
-#     each environment.
-#
-#     **There are no settings required for Dynatrace at this time**
+#   * `project.name` - The name of the Harness Project.
+#   * `env.name` - The name of the environment being deployed to.
+#   * `pipeline.stages.Build_Infra_Main.spec.execution.steps.Infrastructure.steps.Terraform_Apply.output.alb_dns_name_private` - The internal ALB URL to the newly deployed instances.
+# :::
 #
 verification:
   jenkins:
     - name: Functional Tests
-      job_name: mostly-harmless/Functional Tests
-      parameters:
-        url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
-        env: ${env.name}
+      job: mostly-harmless/Functional Tests
       environments:
         - dev
         - qa
         - stage
         - perf
         - prod
+      params:
+        - name: url
+          value: https://<+pipeline.stages.Build_Infra_Main.spec.execution.steps.Infrastructure.steps.Terraform_Apply.output.alb_dns_name_private>:8443
+        - name: env
+          value: <+env.name>
     - name: Load Tests
-      job_name: mostly-harmless/Load Tests
-      parameters:
-        url: http://${context.tsunamiInfra.ROUTE_PRIVATE}:8080
-        env: ${env.name}
-        duration: 300
+      job: mostly-harmless/Load Tests
       environments:
         - dev
         - qa
         - stage
         - perf
         - prod
-  splunk:
-    deploy_verification:
-      - dev
-      - qa
-      - prod
-    queries:
-      dev: index=devops_nonprod_logs source="mostly-harmless-app-requests-dev" \[ERROR\]
-      qa: index=devops_nonprod_logs source="mostly-harmless-app-requests-qa" \[ERROR\]
-      stage: index=devops_nonprod_logs source="mostly-harmless-app-requests-stage" \[ERROR\]
-      perf: index=devops_nonprod_logs source="mostly-harmless-app-requests-perf" \[ERROR\]
-      prod: index=devops_prod_logs source="mostly-harmless-app-requests-prod" \[ERROR\]
+      params:
+        - name: url
+          value: https://<+pipeline.stages.Build_Infra_Main.spec.execution.steps.Infrastructure.steps.Terraform_Apply.output.alb_dns_name_private>:8443
+        - name: env
+          value: <+env.name>
+        - name: duration
+          value: 60
 
 # Change Management
 # -----------------

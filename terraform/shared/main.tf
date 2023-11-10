@@ -1,3 +1,15 @@
+#|############################################################################|#
+#| ***WARNING***  ***WARNING***   ***WARNING***   ***WARNING***  ***WARNING***|#
+#|############################################################################|#
+#| The contents of this file have been automatically updated by Tsunami
+#| You **can** manually edit this file.
+#|
+#| However, be aware that the next time Tsunami updates this file you will loose
+#| some formatting and all in-line comments. Header comments at the beginning of
+#| the file will be preserved.
+#|
+#| Running `terraform fmt` will correct formatting issues.
+#|############################################################################|#
 // -----------------------------------------------------------------------------
 // ***** NOTE *****
 // All code in this file is shared by the "main" terraform code and the 
@@ -12,9 +24,9 @@ provider "aws" {
 }
 
 terraform {
-  required_version = "~> 1.0"
+  required_version = "~> 1.6"
   required_providers {
-    aws = "4.52"
+    aws = "5.22"
   }
 }
 
