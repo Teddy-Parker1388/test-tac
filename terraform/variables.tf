@@ -1,12 +1,15 @@
-################################################################################
-# => The contents of this file have been automatically updated by Tsunami <=
-# You **can** manually edit this file.
-#
-# However, be aware that the next time Tsunami updates this file you will loose
-# some formatting and all comments.
-#
-# Running `terraform fmt` will correct formatting issues.
-################################################################################
+#|############################################################################|#
+#| ***WARNING***  ***WARNING***   ***WARNING***   ***WARNING***  ***WARNING***|#
+#|############################################################################|#
+#| The contents of this file have been automatically updated by Tsunami
+#| You **can** manually edit this file.
+#|
+#| However, be aware that the next time Tsunami updates this file you will loose
+#| some formatting and all in-line comments. Header comments at the beginning of
+#| the file will be preserved.
+#|
+#| Running `terraform fmt` will correct formatting issues.
+#|############################################################################|#
 variable "instance_type" {
   type    = string
   default = "t3.medium"
@@ -121,4 +124,3 @@ variable "egress_all" {
     }
   ]
 }
-
