@@ -49,14 +49,18 @@ groups:
   - name: DevOps Team
     type: team
     members:
-      - user.one@cengage.com
-      - user.two@cengage.com
+      - craig.caroon@cengage.com
+      - teddy.parker@cengage.com
+      - nick.sansone@cengage.com
+      - haripriya.maddineni@cengage.com
   - name: DevOps Notifications
     type: notification
     members:
-      - user.one@cengage.com
-      - user.two@cengage.com
-      - user.three@cengage.com
+      - ben.stewart@cengage.com
+      - craig.caroon@cengage.com
+      - teddy.parker@cengage.com
+      - nick.sansone@cengage.com
+      - haripriya.maddineni@cengage.com
 
 # Artifact
 # --------
