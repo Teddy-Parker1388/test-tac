@@ -19,6 +19,13 @@
 # Valid Values: `blue-green`_ OR `in-place`_ (Rolling)
 deployment_type: in-place
 
+# Environments
+# ------------
+# List of environments that your application needs to support.
+# Defaults to dev, qa, stage, perf and prod if not specified.
+#
+## environments: ## OPTIONAL [1-15 items]
+##   - example_environments_value OPTIONAL [~ ^(dev|qa|stage|perf|prod)-?.*$]
 # Users & Groups
 # --------------
 # A list of Groups (and Users) that should be created in Harness.
