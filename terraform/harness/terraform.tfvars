@@ -35,14 +35,28 @@ jenkins:
         value: https://<+pipeline.stages.Build_Infra_Main.spec.execution.steps.Infrastructure.steps.Terraform_Apply.output.alb_dns_name_private>:8443
       - name: env
         value: <+env.name>
-  - name: Load Tests
-    job: mostly-harmless/Load Tests
+  - name: Contract Tests
+    job: CCaroon/Harness Test Job
     environments:
       - dev
       - qa
       - stage
       - perf
       - prod
+    params:
+      - name: name
+        value: Contract Tests
+      - name: url
+        value: https://<+pipeline.stages.Build_Infra_Main.spec.execution.steps.Infrastructure.steps.Terraform_Apply.output.alb_dns_name_private>:8443
+      - name: env
+        value: <+env.name>
+      - name: force_fail
+        value: false
+  - name: Load Tests
+    job: mostly-harmless/Load Tests
+    environments:
+      - stage
+      - perf
     params:
       - name: url
         value: https://<+pipeline.stages.Build_Infra_Main.spec.execution.steps.Infrastructure.steps.Terraform_Apply.output.alb_dns_name_private>:8443
