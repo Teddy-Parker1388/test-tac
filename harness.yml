@@ -26,6 +26,23 @@ deployment_type: in-place
 #
 ## environments: ## OPTIONAL [1-15 items]
 ##   - example_environments_value OPTIONAL [~ ^(dev|qa|stage|perf|prod)-?.*$]
+
+# Project Version
+# ---------------
+# The version of the Harness Project terraform code to use when creating the
+# Project in the Harness UI.
+#
+# Defaults to the latest version if not explicitly set.
+#
+# :::{IMPORTANT}
+#   Requires that `tsunami tac sync` be run after the value is updated.
+#
+#   The project terraform code will also need to be applied to effect the
+#   change. See `./terraform/harness/README.md`
+# :::
+#
+project_version: v1.0.0
+
 # Users & Groups
 # --------------
 # A list of Groups (and Users) that should be created in Harness.
