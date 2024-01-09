@@ -1,5 +1,5 @@
 module "project" {
-  source                        = "git::ssh://git@stash.cengage.com:7999/do/harness-terraform.git//modules/terraform-harness-project?ref=v1.0.0"
+  source                        = "git::ssh://git@stash.cengage.com:7999/do/harness-terraform.git//modules/terraform-harness-project?ref=release/1.0"
   organization_id               = var.organization_id
   project_name                  = var.project_name
   is_test_project               = var.is_test_project
