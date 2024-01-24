@@ -11,6 +11,8 @@
 #   Changing any of these values after your application already exists in
 #   Harness will **NOT HAVE ANY EFFECT**.
 
+organization: DevOps
+
 # Deployment Type/Paradigm
 # ------------------------
 # .. _blue-green: https://docs.harness.io/article/325x7awntc-deployment-concepts-and-strategies#blue_green_deployment
