@@ -11,6 +11,10 @@
 #   Changing any of these values after your application already exists in
 #   Harness will **NOT HAVE ANY EFFECT**.
 
+# Organization
+# ------------
+# The ID of the Organization in Harness that this application belongs to.
+#
 organization: DevOps
 
 # Deployment Type/Paradigm
