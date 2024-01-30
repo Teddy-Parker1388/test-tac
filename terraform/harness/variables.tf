@@ -76,7 +76,7 @@ variable "files" {
   default = {}
 }
 
-variables "start_stop_triggers_envs" {
+variable "start_stop_triggers_envs" {
   type    = list(string)
   default = []
 }
