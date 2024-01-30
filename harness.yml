@@ -33,6 +33,14 @@ deployment_type: in-place
 ## environments: ## OPTIONAL [1-15 items]
 ##   - example_environments_value OPTIONAL [~ ^(dev|qa|stage|perf|prod)-?.*$]
 
+# Enable Start Stop Triggers
+# --------------------------
+# List of non-prod environments that start/stop instance triggers should be
+# enabled. Defaults to [] if not specified.
+#
+## enable_start_stop_triggers: ## OPTIONAL [0-5 items]
+##   - example_enable_start_stop_triggers_value OPTIONAL [~ ^(dev|qa|stage|perf)-?.*$]
+
 # Project Version
 # ---------------
 # The version of the Harness Project terraform code to use when creating the
