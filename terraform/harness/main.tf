@@ -18,4 +18,5 @@ module "project" {
   project_vars                  = var.project_vars
   deployment_type               = var.deployment_type
   files                         = var.files
+  start_stop_triggers_envs      = var.start_stop_triggers_envs
 }

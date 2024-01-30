@@ -75,3 +75,8 @@ variable "files" {
   type    = map(string)
   default = {}
 }
+
+variables "start_stop_triggers_envs" {
+  type    = list(string)
+  default = []
+}
