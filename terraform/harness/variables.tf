@@ -80,3 +80,8 @@ variable "start_stop_triggers_envs" {
   type    = list(string)
   default = []
 }
+
+variable "deployment_order_file" {
+  type    = string
+  default = ""
+}
