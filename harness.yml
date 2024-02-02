@@ -41,6 +41,24 @@ deployment_type: in-place
 ## enable_start_stop_triggers: ## OPTIONAL [0-5 items]
 ##   - example_enable_start_stop_triggers_value OPTIONAL [~ ^(dev|qa|stage|perf)-?.*$]
 
+# Deployment Order File
+# ---------------------
+# Name of file (script) Harness will use to compute deployment order.
+#
+# **This is not suppported for `blue-green` deployment.**
+#
+## deployment_order_file: OPTIONAL
+
+# Rolling Deploy Percent
+# ----------------------
+# Percentage of instances to deploy to per Rolling Phase.
+# The value should be set per environment.
+#
+# **The default is `50` if not specified or set for an environment.**
+# **This is not suppported for `blue-green` deployment.**
+#
+## rolling_deploy_percent: ## OPTIONAL [1-5 key/value pairs]
+
 # Project Version
 # ---------------
 # The version of the Harness Project terraform code to use when creating the
