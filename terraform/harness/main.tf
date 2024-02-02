@@ -1,5 +1,5 @@
 module "project" {
-  source                        = "git::ssh://git@stash.cengage.com:7999/do/harness-terraform.git//modules/terraform-harness-project?ref=release/1.0"
+  source                        = "git::ssh://git@stash.cengage.com:7999/do/harness-terraform.git//modules/terraform-harness-project?ref=release/1.1"
   organization_id               = var.organization_id
   project_name                  = var.project_name
   is_test_project               = var.is_test_project
@@ -20,4 +20,5 @@ module "project" {
   files                         = var.files
   start_stop_triggers_envs      = var.start_stop_triggers_envs
   deployment_order_file         = var.deployment_order_file
+  rolling_deploy_percent        = var.rolling_deploy_percent
 }

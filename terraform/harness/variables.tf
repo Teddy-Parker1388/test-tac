@@ -78,10 +78,15 @@ variable "files" {
 
 variable "start_stop_triggers_envs" {
   type    = list(string)
-  default = []
+  default = ["all-non-prod"]
 }
 
 variable "deployment_order_file" {
   type    = string
   default = ""
+}
+
+variable "rolling_deploy_percent" {
+  type    = map(string)
+  default = {}
 }
