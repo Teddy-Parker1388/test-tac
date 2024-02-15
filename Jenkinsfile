@@ -1,6 +1,9 @@
 @Library("tsunami_test")_
 node {
- sh "pwd"
+ sh """
+pwd
+ls -l
+ """
  testJenkins()
 
 }
