@@ -1,10 +1,12 @@
 node {
-  if(env.BRANCH_NAME == "main"){
-  stage("Test"){
-sh "echo new TAC"
+  def environments = /^(dev|prod|qa|stage|perf).*/
+  
+  if(env.BRANCH_NAME == environments){
+      stage("Test"){
+        sh "echo new TAC"
   }
-  stage("Tsunami Check"){
-sh "tsunami --version"
+      stage("Tsunami Check"){
+        sh "tsunami --version"
 
   }
   }
