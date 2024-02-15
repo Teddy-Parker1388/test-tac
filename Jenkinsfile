@@ -1,9 +1,8 @@
 @Library("tsunami_test")_
 node {
- sh """
-pwd
-ls -l
- """
+     stage("INITIALIZE"){
+checkout scm
+       }
  testJenkins()
 
 }
