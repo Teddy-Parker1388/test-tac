@@ -2,7 +2,7 @@
 node {
      stage("INITIALIZE"){
 checkout scm
-          sh "ls -l"
+          sh "git checkout ${env.BRANCH_NAME}"
        }
  testJenkins()
 
