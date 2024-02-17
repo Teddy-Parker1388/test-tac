@@ -5,17 +5,17 @@ checkout scmGit(branches: [[name: "${env.BRANCH_NAME}"]], extensions: [], userRe
        }
  testJenkins()
 
-}*/
+}≈
 
 node {
 stage("Check current dir"){
-/*checkout([
+checkout([
          $class: 'GitSCM',
          branches: scm.branches,
          doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
          extensions: scm.extensions,
          userRemoteConfigs: scm.userRemoteConfigs
-    ])*/
+    ])
 sh "ls -l"
 sh "tsunami tac validate"
 sh "git remote -v"
@@ -25,3 +25,25 @@ sh "git remote -v"
 
 }
 
+*/
+
+
+pipeline {
+agent any 
+     stages {
+stage("Checkout"{
+steps{
+sh "ls -l"
+sh "git remote -v"
+}
+}
+
+
+     }
+
+
+
+
+
+
+}
