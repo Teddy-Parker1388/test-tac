@@ -18,6 +18,7 @@ stage("Check current dir"){
     ])*/
 sh "ls -l"
 sh "tsunami tac validate"
+sh "git remote -v"
 
 }
 
