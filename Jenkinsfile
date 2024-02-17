@@ -31,7 +31,7 @@ sh "git remote -v"
 pipeline {
 agent any 
      stages {
-stage("Checkout"{
+stage("Checkout"){
 steps{
 sh "ls -l"
 sh "git remote -v"
