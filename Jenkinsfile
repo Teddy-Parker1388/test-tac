@@ -17,6 +17,7 @@ stage("Check current dir"){
          userRemoteConfigs: scm.userRemoteConfigs
     ])*/
 sh "ls -l"
+sh "tsunami tac validate"
 
 }
 
