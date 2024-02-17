@@ -16,7 +16,7 @@ stage("Check current dir"){
          extensions: scm.extensions,
          userRemoteConfigs: scm.userRemoteConfigs
     ])*/
-sh "git branch"
+sh "ls -l"
 
 }
 
