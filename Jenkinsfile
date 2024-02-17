@@ -9,7 +9,7 @@ checkout scmGit(branches: [[name: "${env.BRANCH_NAME}"]], extensions: [], userRe
 
 node {
 stage("Check current dir"){
-sh "pwd
+sh "pwd"
 
 }
 
