@@ -16,7 +16,7 @@ checkout([
          extensions: scm.extensions,
          userRemoteConfigs: scm.userRemoteConfigs
     ])
-sh "pwd"
+sh "git branch"
 
 }
 
