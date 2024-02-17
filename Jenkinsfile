@@ -9,6 +9,13 @@ checkout scmGit(branches: [[name: "${env.BRANCH_NAME}"]], extensions: [], userRe
 
 node {
 stage("Check current dir"){
+checkout([
+         $class: 'GitSCM',
+         branches: scm.branches,
+         doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+         extensions: scm.extensions,
+         userRemoteConfigs: scm.userRemoteConfigs
+    ])
 sh "pwd"
 
 }
