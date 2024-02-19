@@ -8,6 +8,7 @@ sh "echo new TAC"
      withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]){
       sh 'echo "$USERPASS"'
       sh 'echo "$USERNAME"'
+      sh 'git push origin dev'
 
     }
 sh "tsunami --version"
