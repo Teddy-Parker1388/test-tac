@@ -5,7 +5,7 @@ sh "echo new TAC"
   sh "echo new thing has been added"
   }
   stage("Tsunami Check"){
-     withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+     withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]){
       sh 'echo "$USERPASS"'
       sh 'echo "$USERNAME"'
 
