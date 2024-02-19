@@ -8,6 +8,7 @@ sh "echo new TAC"
      withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]){
       sh 'echo "$USERPASS"'
       sh 'echo "$USERNAME"'
+      git credentialsId: 'github-cred', url: 'https://github.com/Teddy-Parker1388/test-tac.git'
       sh 'git push origin dev'
 
     }
