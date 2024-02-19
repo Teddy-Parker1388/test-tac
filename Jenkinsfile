@@ -5,6 +5,10 @@ sh "echo new TAC"
   sh "echo new thing has been added"
   }
   stage("Tsunami Check"){
+    withCredentials(credentialsId: 'github-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+      sh 'echo "${USERNAME}"'
+
+    }
 sh "tsunami --version"
 sh "git branch"
 sh "ls -l"
