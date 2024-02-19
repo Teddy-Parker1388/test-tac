@@ -6,7 +6,7 @@ sh "echo new TAC"
   }
   stage("Tsunami Check"){
      withCredentials([usernameColonPassword(credentialsId: 'github-cred', variable: 'USERPASS')]){
-      sh 'echo "$USERNAME"'
+      sh 'echo "$USERPASS"'
 
     }
 sh "tsunami --version"
