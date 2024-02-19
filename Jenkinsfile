@@ -9,6 +9,7 @@ sh "tsunami --version"
 sh "git branch"
 sh "ls -l"
 sh "tsunami tac validate"
+sh "tsunami tac sync"
 
   }
 
