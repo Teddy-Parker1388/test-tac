@@ -8,6 +8,7 @@ sh "echo new TAC"
 sh "tsunami --version"
 sh "git branch"
 sh "ls -l"
+sh "git checkout"
 sh "tsunami tac validate"
 sh "tsunami tac sync"
 
