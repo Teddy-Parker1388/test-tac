@@ -9,7 +9,7 @@ sh "echo new TAC"
       sh 'echo "$USERPASS"'
       sh 'echo "$USERNAME"'
       git branch: 'dev', credentialsId: 'github-cred', url: 'https://github.com/Teddy-Parker1388/test-tac.git'
-      sh 'git push origin dev'
+      sh 'git push origin HEAD'
 
     }
 sh "tsunami --version"
