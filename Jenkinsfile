@@ -6,6 +6,7 @@ sh "echo new TAC"
   }
   stage("Tsunami Check"){
 sh "tsunami --version"
+sh "git branch"
 
   }
 
