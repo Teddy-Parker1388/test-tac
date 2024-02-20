@@ -21,7 +21,7 @@ node {
     sh "python3 -m pip list"
   }
   stage("Tsunami TAC Sync"){
-   sh "tsunami tac sync"
+   sh "tsunami tac sync -e dev"
 
   }
   stage("Tsunami TAC Validate"){
