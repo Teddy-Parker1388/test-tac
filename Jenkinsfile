@@ -30,7 +30,8 @@ node {
                     git commit -m 'Changes made after running TAC Sync'
                     
                 """
-     git push origin dev
+     script{
+     git push origin dev}
               withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
     sh """
     git config --global user.name ${GIT_USERNAME}
