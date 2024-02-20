@@ -25,6 +25,7 @@ stage("Checkout"){
             
             git add .
             git commit -m 'Changes made after running TAC Sync'
+            git push origin ${env.BRANCH_NAME}
             """
 
          }else{
