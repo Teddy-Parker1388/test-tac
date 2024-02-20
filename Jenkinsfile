@@ -30,13 +30,14 @@ node {
                     git commit -m 'Changes made after running TAC Sync'
                     
                 """
-              withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+              withCredentials([sshUserPrivateKey(credentialsId: 'github-ssh', keyFileVariable: 'privateKey', usernameVariable: 'GIT_USERNAME')]) {
     sh """
     git config --global user.name ${GIT_USERNAME}
-    git config --global user.password ${GIT_PASSWORD}
+    git config --global user.email pteddy17@gmail.com
     git push --set-upstream origin ${env.BRANCH_NAME}
     """
 }
+     
      
             } else {
                 echo "No changes detected. Skipping commit."
