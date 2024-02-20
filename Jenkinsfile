@@ -22,6 +22,7 @@ node {
   }
   stage("Tsunami TAC Sync"){
    sh "tsunami tac sync -e ${env.BRANCH_NAME}"
+   sh "git diff"
 
   }
   stage("Tsunami TAC Validate"){
