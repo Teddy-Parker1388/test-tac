@@ -26,11 +26,11 @@ node {
    def changes = sh(script: 'git status --porcelain', returnStdout: true).trim()
    if (changes) {
                 // There are changes, commit them
-                sh '''
+                sh """
                     git add .
-                    git commit -m "Changes made after running TAC Sync"
-                    git push origin "${env.BRANCH_NAME}"
-                '''
+                    git commit -m 'Changes made after running TAC Sync'
+                    git push origin ${env.BRANCH_NAME}
+                """
             } else {
                 echo "No changes detected. Skipping commit."
             }
