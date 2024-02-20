@@ -9,8 +9,21 @@ stage("Checkout"){
 
 }
  stage("Tsunami Sync"){
- echo "Running `tsunami tac sync`..."
- sh "tsunami tac sync -e ${env.BRANCH_NAME}"
+     echo "Running `tsunami tac sync`..."
+     sh "tsunami tac sync -e ${env.BRANCH_NAME}"
+     
+     // Check and commit changes
+     def changes = sh(script: 'git status --short', returnStdout: true).trim()
+     if (changes) {
+                // There are changes, commit them.
+        sh """
+            git add .
+            git commit -m 'Changes made after running TAC Sync'
+            """
+
+         }else{
+       echo "There are no changes to commit"
+     }
 
  }
     stage("Check Stuff"){
