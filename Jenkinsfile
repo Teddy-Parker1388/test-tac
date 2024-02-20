@@ -1,4 +1,3 @@
-
 node {
   stage('Checkout'){
     checkout([
@@ -11,7 +10,6 @@ node {
     sh """
     git remote -v
     git branch
-
 
 
 
@@ -42,3 +40,4 @@ node {
   }
 
 }
+
