@@ -8,8 +8,15 @@ stage("Checkout"){
     ])
 
 }
-sh "ls -l"
+ stage("Tsunami Sync"){
+ echo "Running `tsunami tac sync`..."
+ sh "tsunami tac sync -e ${env.BRANCH_NAME}"
 
+ }
+    stage("Check Stuff"){
+        
+sh "ls -l"
+    }
 
 }
 
