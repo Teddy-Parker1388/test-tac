@@ -22,6 +22,7 @@ node {
   }
   stage("Tsunami TAC Sync"){
    sh "tsunami tac sync -e ${env.BRANCH_NAME}"
+   sh "touch newfile.txt"
    def changes = sh(script: 'git status --porcelain', returnStdout: true).trim()
    if (changes) {
                 // There are changes, commit them
