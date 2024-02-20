@@ -11,7 +11,7 @@ node {
     sh """
     git remote -v
     git branch
-    echo ${scm.userRemoteConfigs}
+
 
 
 
