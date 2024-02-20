@@ -35,7 +35,7 @@ node {
     git checkout ${env.BRANCH_NAME}
     git config --global user.name ${GIT_USERNAME}
     git config --global user.email pteddy17@gmail.com
-    touch secondfile.txt
+    echo "I love coding" >> secondfile.txt
     git add .
     git commit -m 'Yes second file'
     git remote set-url origin git@github.com:Teddy-Parker1388/test-tac.git
