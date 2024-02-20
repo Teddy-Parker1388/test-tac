@@ -32,13 +32,13 @@ node {
                 """
               withCredentials([sshUserPrivateKey(credentialsId: 'github-ssh', keyFileVariable: 'privateKey', usernameVariable: 'GIT_USERNAME')]) {
     sh """
+    git checkout ${env.BRANCH_NAME}
     git config --global user.name ${GIT_USERNAME}
     git config --global user.email pteddy17@gmail.com
     touch secondfile.txt
     git add .
     git commit -m 'Yes second file'
     git remote set-url origin git@github.com:Teddy-Parker1388/test-tac.git
-    git checkout ${env.BRANCH_NAME}
     git pull origin ${env.BRANCH_NAME}
     git push origin ${env.BRANCH_NAME}
     """
