@@ -1,5 +1,5 @@
 node {
-
+cleanWs()
 sh "ls -l"
 
 
