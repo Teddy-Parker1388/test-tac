@@ -14,6 +14,8 @@ stage("Checkout"){
      
      // Check and commit changes
      def changes = sh(script: 'git status --short', returnStdout: true).trim()
+     def environments = /^(dev|prod|qa|stage|perf).*/
+     if (env.BRANCH_NAME =~ environments) {
      if (changes) {
                 // There are changes, commit them.
         sh """
@@ -24,7 +26,7 @@ stage("Checkout"){
          }else{
        echo "There are no changes to commit"
      }
-
+}
  }
     stage("Check Stuff"){
         
