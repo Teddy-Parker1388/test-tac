@@ -13,11 +13,12 @@ stage("Checkout"){
   
      
      // Check and commit changes
-     def changes = sh(script: 'git status --short', returnStdout: true).trim()
-     def environments = /^(dev|prod|qa|stage|perf).*/
+     
+    def environments = /^(dev|prod|qa|stage|perf).*/
      if (env.BRANCH_NAME =~ environments) {
          echo "Running `tsunami tac sync`..."
          sh "tsunami tac sync -e ${env.BRANCH_NAME}"
+    def changes = sh(script: 'git status --short', returnStdout: true).trim()
      if (changes) {
                 // There are changes, commit them.
         sh """
