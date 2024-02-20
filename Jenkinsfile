@@ -31,11 +31,11 @@ node {
                     
                 """
               withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-    sh '''
-    git config --global user.name "${GIT_USERNAME}"
-    git config --global user.password "${GIT_PASSWORD}"
-    git push --set-upstream origin "${env.BRANCH_NAME}"
-    '''
+    sh """
+    git config --global user.name ${GIT_USERNAME}
+    git config --global user.password ${GIT_PASSWORD}
+    git push --set-upstream origin ${env.BRANCH_NAME}
+    """
 }
      
             } else {
