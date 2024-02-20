@@ -1,11 +1,18 @@
-@Library("tsunami_test")_
 node {
-     stage("INITIALIZE"){
-          sh "git remote -v"
-          sh "ls -l"
+stage("Checkout"){
+    checkout([
+        $class: 'GitSCM',
+        branches: scm.branches,
+        extensions: scm.extensions,
+        userRemoteConfigs: scm.userRemoteConfigs
+    ])
 
-       }
- testJenkins()
+}
+sh """
+     ls -l
+     git branch 
+"""
+
 
 }
 
