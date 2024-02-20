@@ -29,13 +29,12 @@ node {
                     git add .
                     git commit -m 'Changes made after running TAC Sync'
                     
-                    git push origin ${env.BRANCH_NAME}
                 """
               withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
     sh '''
     git config --global user.name "${GIT_USERNAME}"
     git config --global user.password "${GIT_PASSWORD}"
-    git push --set-upstream origin dev
+    git push --set-upstream origin "${env.BRANCH_NAME}"
     '''
 }
      
