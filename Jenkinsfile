@@ -18,6 +18,7 @@ node {
   }
   stage("Tsunami Setup"){
     sh "tsunami --version"
+    sh "python3 -m pip list"
   }
   stage("Tsunami TAC Sync"){
    sh "tsunami tac sync"
