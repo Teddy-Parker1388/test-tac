@@ -36,7 +36,7 @@ node {
     git config --global user.email pteddy17@gmail.com
     git remote set-url origin git@github.com:Teddy-Parker1388/test-tac.git
     git pull origin ${env.BRANCH_NAME}
-    git push --set-upstream origin ${env.BRANCH_NAME}
+    git push origin ${env.BRANCH_NAME}
     """
 }
      
