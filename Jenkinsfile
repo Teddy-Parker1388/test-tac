@@ -1,4 +1,16 @@
 node {
+
+sh "ls -l"
+
+
+}
+
+
+
+
+
+
+/*node {
   stage('Checkout'){
     checkout([
         $class: 'GitSCM',
@@ -54,5 +66,5 @@ node {
     sh "tsunami tac validate"
   }
 
-}
+}*/
 
