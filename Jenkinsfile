@@ -11,6 +11,7 @@ node {
     sh """
     git remote -v
     git branch
+    echo ${env.GIT_URL}
 
 
 
