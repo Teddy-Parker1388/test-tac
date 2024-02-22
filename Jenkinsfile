@@ -1,4 +1,4 @@
-@Library("tsunami-test")_
+@Library("tsunami_test")_
 
 testJenkins(){
 agent = any
